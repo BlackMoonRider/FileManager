@@ -10,7 +10,6 @@ namespace FileManager
 {
     class PanelSet
     {
-        private int panelCount;
         public List<ListView> Panels { get; set; }
 
         public PanelSet(int numberOfPanels)
@@ -24,12 +23,14 @@ namespace FileManager
 
                 listView.Items = GetItems("C:\\");
                 listView.Selected += View_Selected;
+                listView.ChooseNextPanel += View_ChooseNextPanel;
+                listView.ChoosePreviousPanel += View_ChoosePreviousPanel;
             }
 
             Panels[0].Focused = true;
         }
 
-        private static void View_Selected(object sender, EventArgs e)
+        private void View_Selected(object sender, EventArgs e)
         {
             ListView listView = (ListView)sender;
             var info = listView.SelectedItem.State;
@@ -42,7 +43,39 @@ namespace FileManager
             }
         }
 
-        private static List<ListViewItem> GetItems(string path)
+        private void View_ChooseNextPanel(object sender, EventArgs e)
+        {
+            for (int i = 0; i < Panels.Count; i++)
+            {
+                if (Panels[i].Focused)
+                {
+                    Panels[i].Focused = false;
+                    if (i == Panels.Count - 1)
+                        Panels[0].Focused = true;
+                    else
+                        Panels[i + 1].Focused = true;
+                    return;
+                }
+            }
+        }
+
+        private void View_ChoosePreviousPanel(object sender, EventArgs e)
+        {
+            for (int i = 0; i < Panels.Count; i++)
+            {
+                if (Panels[i].Focused)
+                {
+                    Panels[i].Focused = false;
+                    if (i == 0)
+                        Panels[Panels.Count - 1].Focused = true;
+                    else
+                        Panels[i - 1].Focused = true;
+                    return;
+                }
+            }
+        }
+
+        private List<ListViewItem> GetItems(string path)
         {
             return new DirectoryInfo(path)
                 .GetFileSystemInfos()

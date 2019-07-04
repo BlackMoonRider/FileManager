@@ -101,15 +101,15 @@ namespace FileManager
             }
             else if (key.Key == ConsoleKey.Enter)
                 Selected(this, EventArgs.Empty);
-            //else if (key.Key == ConsoleKey.RightArrow)
-            //    ChooseNextPanel(this, EventArgs.Empty);
-            //else if (key.Key == ConsoleKey.LeftArrow)
-            //    ChoosePreviousPanel(this, EventArgs.Empty);
+            else if (key.Key == ConsoleKey.RightArrow)
+                ChooseNextPanel(this, EventArgs.Empty);
+            else if (key.Key == ConsoleKey.LeftArrow)
+                ChoosePreviousPanel(this, EventArgs.Empty);
 
         }
 
         public event EventHandler Selected;
-        //public event EventHandler ChooseNextPanel;
-        //public event EventHandler ChoosePreviousPanel;
+        public event EventHandler ChooseNextPanel;
+        public event EventHandler ChoosePreviousPanel;
     }
 }
