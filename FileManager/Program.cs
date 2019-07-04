@@ -14,44 +14,25 @@ namespace FileManager
         {
             Console.CursorVisible = false;
 
-            ListView listView = new ListView(10, 2, height: 20);
-            listView.ColumnWidths = new List<int> { 32, 10, 10 };
+            PanelSet panelSet = new PanelSet(2);
 
-            listView.Items = GetItems("C:\\");
-            listView.Selected += View_Selected;
+            foreach (ListView listView in panelSet.Panels)
+            {
+                listView.Render();
+            }
 
             while (true)
             {
-                listView.Render();
-                var key = Console.ReadKey();
-                listView.UpdateSelectedIndex(key);
+                foreach (ListView listView in panelSet.Panels)
+                {
+                    var key = Console.ReadKey();
+                    listView.UpdateSelectedIndex(key);
+                    listView.Render();
+                }
+
             }
         }
 
-        private static void View_Selected(object sender, EventArgs e)
-        {
-            ListView listView = (ListView)sender;
-            var info = listView.SelectedItem.State;
-            if (info is FileInfo file)
-                Process.Start(file.FullName);
-            else if (info is DirectoryInfo directoryInfo)
-            {
-                listView.Clean();
-                listView.Items = GetItems(directoryInfo.FullName);
-            }
-        }
 
-        private static List<ListViewItem> GetItems(string path)
-        {
-            return new DirectoryInfo(path)
-                .GetFileSystemInfos()
-                .Select(
-                lvi => new ListViewItem(
-                lvi,
-                lvi.Name,
-                lvi is DirectoryInfo dir ? "<dir>" : lvi.Extension,
-                lvi is FileInfo file ? file.Length.ToString() : ""))
-                .ToList();
-        }
     }
 }

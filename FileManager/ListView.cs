@@ -30,9 +30,12 @@ namespace FileManager
         public ListViewItem SelectedItem => Items[SelectedIndex];
         public bool Focused { get; set; }
 
-        public ListView(int offsetX, int offsetY, int height)
+        public ListView(int offsetX, int offsetY, int height, int offsetXMultiplier)
         {
-            this.offsetX = offsetX;
+            ColumnWidths = new List<int> { 32, 10, 10 };
+
+            this.offsetX = offsetX + offsetXMultiplier * ColumnWidths.Sum() + 
+                (offsetXMultiplier > 0 ? 2 : 0);
             this.offsetY = offsetY;
 
             this.height = height; 
@@ -78,6 +81,9 @@ namespace FileManager
 
         public void UpdateSelectedIndex(ConsoleKeyInfo key)
         {
+            if (!Focused)
+                return;
+
             if (key.Key == ConsoleKey.UpArrow && SelectedIndex != 0)
                 SelectedIndex--;
             else if (key.Key == ConsoleKey.DownArrow && SelectedIndex < Items.Count - 1)
@@ -95,8 +101,15 @@ namespace FileManager
             }
             else if (key.Key == ConsoleKey.Enter)
                 Selected(this, EventArgs.Empty);
+            //else if (key.Key == ConsoleKey.RightArrow)
+            //    ChooseNextPanel(this, EventArgs.Empty);
+            //else if (key.Key == ConsoleKey.LeftArrow)
+            //    ChoosePreviousPanel(this, EventArgs.Empty);
+
         }
 
         public event EventHandler Selected;
+        //public event EventHandler ChooseNextPanel;
+        //public event EventHandler ChoosePreviousPanel;
     }
 }
