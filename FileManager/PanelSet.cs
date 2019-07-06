@@ -106,13 +106,17 @@ namespace FileManager
 
                 else if (e.action == Action.Cut)
                 {
+                    var fileToCopy = e.listViewItem.State.FullName;
+                    var fileToPaste = Path.GetDirectoryName(info.FullName) + "\\" + Path.GetFileName(e.listViewItem.State.FullName);
 
+                    File.Move(fileToCopy, fileToPaste);
                 }
 
                 foreach (var panel in Panels)
                 {
-                    listView.Clean();
-                    listView.Items = GetItems(Path.GetDirectoryName(info.FullName));
+                    panel.Clean();
+                    panel.Items = GetItems(Path.GetDirectoryName(panel.SelectedItem.State.FullName));
+                    panel.Render();
                 }
 
             }
@@ -123,9 +127,12 @@ namespace FileManager
 
                 }
 
-                if (e.action == Action.Cut)
+                else if (e.action == Action.Cut)
                 {
+                    //var fileToCopy = e.listViewItem.State.FullName;
+                    //var fileToPaste = Path.GetDirectoryName(info.FullName);
 
+                    //Directory.Move(fileToCopy, fileToPaste);
                 }
                 listView.Clean();
                 listView.Items = GetItems(directoryInfo.FullName);

@@ -114,10 +114,17 @@ namespace FileManager
                 return true;
             }
             else if (key.Key == ConsoleKey.F1)
+            {
                 currentItemToOperateOn = SelectedItem;
+                currentAction = Action.Copy;
+            }
+            else if (key.Key == ConsoleKey.F2)
+            {
+                currentItemToOperateOn = SelectedItem;
+                currentAction = Action.Cut;
+            }
             else if (key.Key == ConsoleKey.F3)
             {
-
                 Paste?.Invoke(this, new CopyCutEventArgs(currentItemToOperateOn, currentAction));
             }
 
