@@ -79,10 +79,10 @@ namespace FileManager
             isRendered = true;
         }
 
-        public void UpdateSelectedIndex(ConsoleKeyInfo key)
+        public bool UpdateSelectedIndex(ConsoleKeyInfo key)
         {
             if (!Focused)
-                return;
+                return false;
 
             if (key.Key == ConsoleKey.UpArrow && SelectedIndex != 0)
                 SelectedIndex--;
@@ -100,12 +100,19 @@ namespace FileManager
                 isRendered = false;
             }
             else if (key.Key == ConsoleKey.Enter)
-                Selected(this, EventArgs.Empty);
+                Selected?.Invoke(this, EventArgs.Empty);
             else if (key.Key == ConsoleKey.RightArrow)
-                ChooseNextPanel(this, EventArgs.Empty);
+            {
+                ChooseNextPanel?.Invoke(this, EventArgs.Empty);
+                return true;
+            }
             else if (key.Key == ConsoleKey.LeftArrow)
-                ChoosePreviousPanel(this, EventArgs.Empty);
+            {
+                ChoosePreviousPanel?.Invoke(this, EventArgs.Empty);
+                return true;
+            }
 
+            return false;
         }
 
         public event EventHandler Selected;

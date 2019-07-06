@@ -23,16 +23,14 @@ namespace FileManager
 
             while (true)
             {
+                var key = Console.ReadKey();
                 foreach (ListView listView in panelSet.Panels)
                 {
-                    var key = Console.ReadKey();
-                    listView.UpdateSelectedIndex(key);
+                    if (listView.UpdateSelectedIndex(key))
+                        break;
                     listView.Render();
                 }
-
             }
         }
-
-
     }
 }
