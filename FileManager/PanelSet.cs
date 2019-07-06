@@ -25,6 +25,7 @@ namespace FileManager
                 listView.Selected += View_Selected;
                 listView.ChooseNextPanel += View_ChooseNextPanel;
                 listView.ChoosePreviousPanel += View_ChoosePreviousPanel;
+                listView.Paste += View_Paste;
             }
 
             Panels[0].Focused = true;
@@ -33,7 +34,7 @@ namespace FileManager
         private void View_Selected(object sender, EventArgs e)
         {
             ListView listView = (ListView)sender;
-            var info = listView.SelectedItem.State;
+            FileSystemInfo info = listView.SelectedItem.State;
             if (info is FileInfo file)
                 Process.Start(file.FullName);
             else if (info is DirectoryInfo directoryInfo)
@@ -86,6 +87,49 @@ namespace FileManager
                 lvi is DirectoryInfo dir ? "<dir>" : lvi.Extension,
                 lvi is FileInfo file ? file.Length.ToString() : ""))
                 .ToList();
+        }
+
+        private void View_Paste(object sender, CopyCutEventArgs e)
+        {
+            ListView listView = (ListView)sender;
+            FileSystemInfo info = listView.SelectedItem.State;
+
+            if (info is FileInfo file)
+            {
+                if (e.action == Action.Copy)
+                {
+                    var fileToCopy = e.listViewItem.State.FullName;
+                    var fileToPaste = Path.GetDirectoryName(info.FullName) + "\\" + Path.GetFileName(e.listViewItem.State.FullName);
+
+                    File.Copy(fileToCopy, fileToPaste);
+                }
+
+                else if (e.action == Action.Cut)
+                {
+
+                }
+
+                foreach (var panel in Panels)
+                {
+                    listView.Clean();
+                    listView.Items = GetItems(Path.GetDirectoryName(info.FullName));
+                }
+
+            }
+            else if (info is DirectoryInfo directoryInfo)
+            {
+                if (e.action == Action.Copy)
+                {
+
+                }
+
+                if (e.action == Action.Cut)
+                {
+
+                }
+                listView.Clean();
+                listView.Items = GetItems(directoryInfo.FullName);
+            }
         }
     }
 }

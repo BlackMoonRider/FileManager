@@ -27,6 +27,8 @@ namespace FileManager
             }
         }
         private int previouslySelectedIndex;
+        private static ListViewItem currentItemToOperateOn;
+        private static Action currentAction;
         public ListViewItem SelectedItem => Items[SelectedIndex];
         public bool Focused { get; set; }
 
@@ -111,12 +113,22 @@ namespace FileManager
                 ChoosePreviousPanel?.Invoke(this, EventArgs.Empty);
                 return true;
             }
+            else if (key.Key == ConsoleKey.F1)
+                currentItemToOperateOn = SelectedItem;
+            else if (key.Key == ConsoleKey.F3)
+            {
+
+                Paste?.Invoke(this, new CopyCutEventArgs(currentItemToOperateOn, currentAction));
+            }
 
             return false;
+
+            // TODO: Сделать агрегацию - класс, который использует ListView, отвечает за F1... и содержит уже нестатические поля буфера обмена.
         }
 
         public event EventHandler Selected;
         public event EventHandler ChooseNextPanel;
         public event EventHandler ChoosePreviousPanel;
+        public event EventHandler<CopyCutEventArgs> Paste;
     }
 }
