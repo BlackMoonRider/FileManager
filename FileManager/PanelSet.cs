@@ -100,7 +100,7 @@ namespace FileManager
                 if (e.action == Actions.Copy)
                 {
                     var fileToCopy = e.listViewItem.State.FullName;
-                    var fileToPaste = Path.GetDirectoryName(senderInfo.FullName) + "\\" + Path.GetFileName(e.listViewItem.State.FullName);  // Fix double-slashes when copying to a root folder
+                    var fileToPaste = Path.GetDirectoryName(senderInfo.FullName) + "\\" + Path.GetFileName(e.listViewItem.State.FullName);  
 
                     File.Copy(fileToCopy, fileToPaste);
                 }
@@ -108,19 +108,11 @@ namespace FileManager
                 else if (e.action == Actions.Cut)
                 {
                     var fileToCopy = e.listViewItem.State.FullName;
-                    var fileToPaste = Path.GetDirectoryName(senderInfo.FullName) + "\\" + Path.GetFileName(e.listViewItem.State.FullName);  // Fix double-slashes when copying to a root folder
-
+                    var fileToPaste = Path.GetDirectoryName(senderInfo.FullName) + "\\" + Path.GetFileName(e.listViewItem.State.FullName);  
                     File.Move(fileToCopy, fileToPaste);
                 }
-
-                foreach (var panel in Panels)
-                {
-                    panel.Clean();
-                    panel.Items = GetItems(Path.GetDirectoryName(panel.SelectedItem.State.FullName));
-                    panel.Render();
-                }
-
             }
+
             else if (sourceInfo is DirectoryInfo directoryInfo)
             {
                 if (e.action == Actions.Copy)
@@ -131,12 +123,17 @@ namespace FileManager
                 else if (e.action == Actions.Cut)
                 {
                     var folderToCopy = e.listViewItem.State.FullName;
-                    var folderToPaste = Path.GetDirectoryName(senderInfo.FullName) + "\\" + e.listViewItem.State.Name; // Fix double-slashes when copying to a root folder
-
+                    var folderToPaste = Path.GetDirectoryName(senderInfo.FullName) + "\\" + e.listViewItem.State.Name;
+                    
                     Directory.Move(folderToCopy, folderToPaste);
                 }
-                listView.Clean();
-                listView.Items = GetItems(Path.GetDirectoryName(directoryInfo.FullName));
+            }
+
+            foreach (var panel in Panels)
+            {
+                panel.Clean();
+                panel.Items = GetItems(Path.GetDirectoryName(panel.SelectedItem.State.FullName));
+                panel.Render();
             }
         }
     }
