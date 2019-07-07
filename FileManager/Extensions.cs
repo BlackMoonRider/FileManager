@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FileManager
 {
-    public static class Extensions : Object
+    public static class Extensions
     {
         public static void DirectoryCopy(string sourceName, string destinationName, bool copySubDirs = true)
         {
