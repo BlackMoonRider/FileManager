@@ -34,8 +34,10 @@ namespace FileManager.ActionPerformers
                     return new Cut();
                 case ConsoleKey.F3:
                     return new Paste();
+#if DEBUG
                 case ConsoleKey.F12:
                     return new Test();
+#endif
                 default:
                     return new NoAction();
             }

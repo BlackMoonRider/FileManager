@@ -9,21 +9,26 @@ namespace FileManager
     class PopupInput
     {
         private readonly int offsetX, offsetY, height, width;
-        private bool isRendered;
+        // private bool isRendered;
+        private PanelSet panelSet;
 
         public string NewName { get; private set; }
 
-        public PopupInput(int offsetX, int offsetY, int height, int width = 10)
+        public PopupInput(int offsetX, int offsetY, int height, int width, PanelSet panelSet)
         {
             this.offsetX = offsetX;
             this.offsetY = offsetY;
 
             this.height = height;
             this.width = width;
+
+            this.panelSet = panelSet;
         }
 
-        public PopupInput()
+        public PopupInput(PanelSet panelSet)
         {
+            this.panelSet = panelSet;
+
             width = 30;
             height = 10;
 
@@ -65,6 +70,8 @@ namespace FileManager
 
             Console.ForegroundColor = savedForegroundColor;
             Console.BackgroundColor = savedBackgroundColor;
+
+            Extensions.RefreshScreen(panelSet);
         }
 
         private bool NameIsValid(string name) // TODO: Add all real Windows names constraints 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FileManager
 {
-    public static class Extensions
+    static class Extensions
     {
         public static void DirectoryCopy(string sourceName, string destinationName, bool copySubDirs = true)
         {
@@ -41,6 +41,18 @@ namespace FileManager
                     string tempPath = Path.Combine(destinationName, subdir.Name);
                     DirectoryCopy(subdir.FullName, tempPath, copySubDirs);
                 }
+            }
+        }
+
+        public static void RefreshScreen(PanelSet panelSet)
+        {
+            Console.Clear();
+
+            foreach (var panel in panelSet.Panels)
+            {
+                panel.Clean();
+                panel.Items = panelSet.GetItems(Path.GetDirectoryName(panel.SelectedItem.State.FullName));
+                panel.Render();
             }
         }
     }

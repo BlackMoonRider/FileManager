@@ -10,7 +10,7 @@ namespace FileManager.ActionPerformers
     {
         public override void Do(ActionPerformerArgs actionPerformerArgs)
         {
-            PopupInput popupInput = new PopupInput();
+            PopupInput popupInput = new PopupInput(actionPerformerArgs.PanelSet);
 
             popupInput.Render();
         }

@@ -40,12 +40,7 @@ namespace FileManager.ActionPerformers
                     Directory.Move(folderToCopy, folderToPaste);
             }
 
-            foreach (var panel in actionPerformerArgs.PanelSet.Panels)
-            {
-                panel.Clean();
-                panel.Items = actionPerformerArgs.PanelSet.GetItems(Path.GetDirectoryName(panel.SelectedItem.State.FullName));
-                panel.Render();
-            }
+            Extensions.RefreshScreen(actionPerformerArgs.PanelSet);
         }
     }
 }
