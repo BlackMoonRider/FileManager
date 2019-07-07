@@ -14,7 +14,7 @@ namespace FileManager.ActionPerformers
         public IActionPerformerBehavior GetActionPerformer(ActionPerformerArgs actionPerformerArgs)
         {
             ConsoleKeyInfo key = actionPerformerArgs.Key;
-            ListView listView = actionPerformerArgs.ListView;
+            ListView listView = actionPerformerArgs.PanelSet.FocusedListView;
 
             switch (key.Key)
             {

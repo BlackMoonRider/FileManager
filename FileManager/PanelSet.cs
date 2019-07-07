@@ -48,9 +48,8 @@ namespace FileManager
 
         public void Update(ConsoleKeyInfo key)
         {
-            ActionPerformerArgs args = new ActionPerformerArgs(key, FocusedListView);
+            ActionPerformerArgs args = new ActionPerformerArgs(key, this);
             ActionPerformer = ActionPerformer.GetActionPerformer(args);
-            //ActionPerformer.Do(FocusedListView, new ActionPerformerArgs());
             ActionPerformer.Do(args);
         }
 

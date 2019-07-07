@@ -16,21 +16,12 @@ namespace FileManager
     class ActionPerformerArgs
     {
         public ConsoleKeyInfo Key;
-        public ListView ListView;
-        public ListViewItem ListViewItem;
-        public Actions Action;
+        public PanelSet PanelSet;
 
-        public ActionPerformerArgs(ConsoleKeyInfo key, ListView listView)
+        public ActionPerformerArgs(ConsoleKeyInfo key, PanelSet panelSet)
         {
             Key = key;
-            ListView = listView;
-        }
-
-        public ActionPerformerArgs(ConsoleKeyInfo key, ListView listView, ListViewItem listViewItem, Actions action) 
-            : this (key, listView)
-        {
-            ListViewItem = listViewItem;
-            Action = action;
+            PanelSet = panelSet;
         }
     }
 }

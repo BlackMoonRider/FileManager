@@ -10,7 +10,7 @@ namespace FileManager.ActionPerformers
     {
         public override void Do(ActionPerformerArgs args)
         {
-            args.ListView.SelectedIndex--;
+            args.PanelSet.FocusedListView.SelectedIndex--;
         }
     }
 }
