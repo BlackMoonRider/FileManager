@@ -54,10 +54,12 @@
     <Compile Include="ActionPerformers\NoAction.cs" />
     <Compile Include="ActionPerformers\OpenFileFolder.cs" />
     <Compile Include="ActionPerformers\Paste.cs" />
+    <Compile Include="ActionPerformers\Test.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="ListView.cs" />
     <Compile Include="ListViewItem.cs" />
     <Compile Include="PanelSet.cs" />
+    <Compile Include="PopupInput.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
