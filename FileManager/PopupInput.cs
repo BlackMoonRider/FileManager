@@ -11,6 +11,8 @@ namespace FileManager
         private readonly int offsetX, offsetY, height, width;
         private bool isRendered;
 
+        public string NewName { get; private set; }
+
         public PopupInput(int offsetX, int offsetY, int height, int width = 10)
         {
             this.offsetX = offsetX;
@@ -36,8 +38,8 @@ namespace FileManager
             var savedForegroundColor = Console.ForegroundColor;
             var savedBackgroundColor = Console.BackgroundColor;
 
-            Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.BackgroundColor = ConsoleColor.DarkGreen;
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            Console.BackgroundColor = ConsoleColor.DarkCyan;
 
             for (int i = 0; i < height; i++)
             {
@@ -46,8 +48,31 @@ namespace FileManager
                 Console.WriteLine(background);
             }
 
+            string newName = String.Empty;
+
+            while (NameIsValid(newName))
+            {
+                Console.CursorTop = offsetY + 1;
+                Console.CursorLeft = offsetX + 1;
+                Console.WriteLine("Enter new name:");
+
+                Console.CursorTop = offsetY + 3;
+                Console.CursorLeft = offsetX + 1;
+                newName = Console.ReadLine();
+            }
+
+            NewName = newName;
+
             Console.ForegroundColor = savedForegroundColor;
             Console.BackgroundColor = savedBackgroundColor;
+        }
+
+        private bool NameIsValid(string name) // TODO: Add all real Windows names constraints 
+        {
+            if (String.IsNullOrWhiteSpace(name))
+                return true;
+            else
+                return false;
         }
     }
 }
