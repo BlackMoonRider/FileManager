@@ -22,9 +22,8 @@ namespace FileManager.ActionPerformers
                     return new MoveCursorUp();
                 case ConsoleKey.DownArrow when listView.SelectedIndex < listView.Items.Count - 1:
                     return new MoveCursorDown();
-                //case ConsoleKey.Enter:
-                //    Selected?.Invoke(this, EventArgs.Empty);
-                //    break;
+                case ConsoleKey.Enter:
+                    return new OpenFileFolder();
                 //case ConsoleKey.RightArrow:
                 //    ChooseNextPanel?.Invoke(this, EventArgs.Empty);
                 //    return true;

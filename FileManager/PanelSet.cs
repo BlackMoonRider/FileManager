@@ -46,6 +46,19 @@ namespace FileManager
             return null;
         }
 
+        public List<ListViewItem> GetItems(string path)
+        {
+            return new DirectoryInfo(path)
+                .GetFileSystemInfos()
+                .Select(
+                lvi => new ListViewItem(
+                lvi,
+                lvi.Name,
+                lvi is DirectoryInfo dir ? "<dir>" : lvi.Extension,
+                lvi is FileInfo file ? file.Length.ToString() : ""))
+                .ToList();
+        }
+
         public void Update(ConsoleKeyInfo key)
         {
             ActionPerformerArgs args = new ActionPerformerArgs(key, this);
@@ -142,19 +155,6 @@ namespace FileManager
                     return;
                 }
             }
-        }
-
-        private List<ListViewItem> GetItems(string path)
-        {
-            return new DirectoryInfo(path)
-                .GetFileSystemInfos()
-                .Select(
-                lvi => new ListViewItem(
-                lvi,
-                lvi.Name,
-                lvi is DirectoryInfo dir ? "<dir>" : lvi.Extension,
-                lvi is FileInfo file ? file.Length.ToString() : ""))
-                .ToList();
         }
 
         private void View_Paste(object sender, CopyCutEventArgs e)
