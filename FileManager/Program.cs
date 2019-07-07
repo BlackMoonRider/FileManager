@@ -13,13 +13,11 @@ namespace FileManager
         static void Main(string[] args)
         {
             Console.CursorVisible = false;
+            Console.WindowHeight = 50;
 
             PanelSet panelSet = new PanelSet(2);
 
-            foreach (ListView listView in panelSet.Panels)
-            {
-                listView.Render();
-            }
+            Extensions.RefreshScreen(panelSet);
 
             while (true)
             {
