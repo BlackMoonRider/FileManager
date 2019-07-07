@@ -12,9 +12,9 @@ namespace FileManager
     class PanelSet
     {
         public List<ListView> Panels { get; set; }
-        private ListViewItem CurrentItemToOperateOn { get; set; }
+        public ListViewItem CurrentItemToOperateOn { get; set; }
         public IActionPerformerBehavior ActionPerformer { get; private set; }
-        private Actions currentAction;
+        public Actions CurrentAction;
 
         public PanelSet(int numberOfPanels)
         {
@@ -91,16 +91,16 @@ namespace FileManager
             else if (key.Key == ConsoleKey.F1)
             {
                 CurrentItemToOperateOn = FocusedListView.SelectedItem;
-                currentAction = Actions.Copy;
+                CurrentAction = Actions.Copy;
             }
             else if (key.Key == ConsoleKey.F2)
             {
                 CurrentItemToOperateOn = FocusedListView.SelectedItem;
-                currentAction = Actions.Cut;
+                CurrentAction = Actions.Cut;
             }
             else if (key.Key == ConsoleKey.F3)
             {
-                Paste?.Invoke(this, new CopyCutEventArgs(CurrentItemToOperateOn, currentAction));
+                Paste?.Invoke(this, new CopyCutEventArgs(CurrentItemToOperateOn, CurrentAction));
             }
 
             return false;
