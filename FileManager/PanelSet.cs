@@ -92,22 +92,23 @@ namespace FileManager
         private void View_Paste(object sender, CopyCutEventArgs e)
         {
             ListView listView = (ListView)sender;
-            FileSystemInfo info = listView.SelectedItem.State;
+            FileSystemInfo senderInfo = listView.SelectedItem.State;
+            FileSystemInfo sourceInfo = e.listViewItem.State;
 
-            if (info is FileInfo file)
+            if (sourceInfo is FileInfo file)
             {
-                if (e.action == Action.Copy)
+                if (e.action == Actions.Copy)
                 {
                     var fileToCopy = e.listViewItem.State.FullName;
-                    var fileToPaste = Path.GetDirectoryName(info.FullName) + "\\" + Path.GetFileName(e.listViewItem.State.FullName);
+                    var fileToPaste = Path.GetDirectoryName(senderInfo.FullName) + "\\" + Path.GetFileName(e.listViewItem.State.FullName);  // Fix double-slashes when copying to a root folder
 
                     File.Copy(fileToCopy, fileToPaste);
                 }
 
-                else if (e.action == Action.Cut)
+                else if (e.action == Actions.Cut)
                 {
                     var fileToCopy = e.listViewItem.State.FullName;
-                    var fileToPaste = Path.GetDirectoryName(info.FullName) + "\\" + Path.GetFileName(e.listViewItem.State.FullName);
+                    var fileToPaste = Path.GetDirectoryName(senderInfo.FullName) + "\\" + Path.GetFileName(e.listViewItem.State.FullName);  // Fix double-slashes when copying to a root folder
 
                     File.Move(fileToCopy, fileToPaste);
                 }
@@ -120,22 +121,22 @@ namespace FileManager
                 }
 
             }
-            else if (info is DirectoryInfo directoryInfo)
+            else if (sourceInfo is DirectoryInfo directoryInfo)
             {
-                if (e.action == Action.Copy)
+                if (e.action == Actions.Copy)
                 {
 
                 }
 
-                else if (e.action == Action.Cut)
+                else if (e.action == Actions.Cut)
                 {
-                    //var fileToCopy = e.listViewItem.State.FullName;
-                    //var fileToPaste = Path.GetDirectoryName(info.FullName);
+                    var folderToCopy = e.listViewItem.State.FullName;
+                    var folderToPaste = Path.GetDirectoryName(senderInfo.FullName) + "\\" + e.listViewItem.State.Name; // Fix double-slashes when copying to a root folder
 
-                    //Directory.Move(fileToCopy, fileToPaste);
+                    Directory.Move(folderToCopy, folderToPaste);
                 }
                 listView.Clean();
-                listView.Items = GetItems(directoryInfo.FullName);
+                listView.Items = GetItems(Path.GetDirectoryName(directoryInfo.FullName));
             }
         }
     }

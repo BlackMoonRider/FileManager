@@ -27,8 +27,8 @@ namespace FileManager
             }
         }
         private int previouslySelectedIndex;
-        private static ListViewItem currentItemToOperateOn;
-        private static Action currentAction;
+        private static ListViewItem currentItemToOperateOn; //
+        private static Actions currentAction; //
         public ListViewItem SelectedItem => Items[SelectedIndex];
         public bool Focused { get; set; }
 
@@ -116,12 +116,12 @@ namespace FileManager
             else if (key.Key == ConsoleKey.F1)
             {
                 currentItemToOperateOn = SelectedItem;
-                currentAction = Action.Copy;
+                currentAction = Actions.Copy;
             }
             else if (key.Key == ConsoleKey.F2)
             {
                 currentItemToOperateOn = SelectedItem;
-                currentAction = Action.Cut;
+                currentAction = Actions.Cut;
             }
             else if (key.Key == ConsoleKey.F3)
             {

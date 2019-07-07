@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FileManager
 {
-    enum Action
+    enum Actions
     {
         Copy,
         Cut,
@@ -14,9 +14,9 @@ namespace FileManager
     class CopyCutEventArgs : EventArgs
     {
         public ListViewItem listViewItem;
-        public Action action;
+        public Actions action;
 
-        public CopyCutEventArgs(ListViewItem listViewItem, Action action)
+        public CopyCutEventArgs(ListViewItem listViewItem, Actions action)
         {
             this.listViewItem = listViewItem;
             this.action = action;
