@@ -16,28 +16,26 @@ namespace FileManager.ActionPerformers
 
             var action = actionPerformerArgs.PanelSet.CurrentAction;
 
-            var fileToCopy = sourceInfo.FullName;
-            var fileToPaste = Path.GetDirectoryName(senderInfo.FullName) + "\\" + Path.GetFileName(sourceInfo.FullName);
-
-            var folderToCopy = sourceInfo.FullName;
-            var folderToPaste = Path.GetDirectoryName(senderInfo.FullName) + "\\" + sourceInfo.Name;
+            var source = sourceInfo.FullName;
+            var destinationFile = Path.GetDirectoryName(senderInfo.FullName) + "\\" + Path.GetFileName(sourceInfo.FullName);
+            var destinationFolder = Path.GetDirectoryName(senderInfo.FullName) + "\\" + sourceInfo.Name;
 
             if (sourceInfo is FileInfo file)
             {
                 if (action == Actions.Copy)
-                    File.Copy(fileToCopy, fileToPaste);
+                    File.Copy(source, destinationFile);
 
                 else if (action == Actions.Cut)
-                    File.Move(fileToCopy, fileToPaste);
+                    File.Move(source, destinationFile);
             }
 
             else if (sourceInfo is DirectoryInfo directoryInfo)
             {
                 if (action == Actions.Copy)
-                    Extensions.DirectoryCopy(folderToCopy, folderToPaste);
+                    Extensions.DirectoryCopy(source, destinationFolder);
 
                 else if (action == Actions.Cut)
-                    Directory.Move(folderToCopy, folderToPaste);
+                    Directory.Move(source, destinationFolder);
             }
 
             Extensions.RefreshScreen(actionPerformerArgs.PanelSet);

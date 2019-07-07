@@ -31,8 +31,10 @@ namespace FileManager.ActionPerformers
                 case ConsoleKey.F1:
                     return new Copy();
                 case ConsoleKey.F2:
-                    return new Cut();
+                    return new Rename();
                 case ConsoleKey.F3:
+                    return new Cut();
+                case ConsoleKey.F4:
                     return new Paste();
 #if DEBUG
                 case ConsoleKey.F12:

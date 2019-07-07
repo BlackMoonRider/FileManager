@@ -27,7 +27,7 @@ namespace FileManager
             }
         }
 
-        public ListViewItem SelectedItem => Items[SelectedIndex];
+        public ListViewItem SelectedItem => Items[SelectedIndex]; // Fix copying to an emoty folder
 
         public bool Focused { get; set; }
 
