@@ -37,11 +37,12 @@ namespace FileManager
             Panels[0].Focused = true;
         }
         public ListView FocusedListView => GetFocusedListView();
-        private ListView GetFocusedListView()
+        public ListView GetFocusedListView()
         {
             foreach (var listView in Panels)
             {
-                return listView;
+                if (listView.Focused)
+                    return listView;
             }
             return null;
         }

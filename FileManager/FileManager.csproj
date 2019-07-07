@@ -44,6 +44,8 @@
   <ItemGroup>
     <Compile Include="ActionPerformers\AbstractActionPerformerBehavior.cs" />
     <Compile Include="ActionPerformers\ActionPerformerArgs.cs" />
+    <Compile Include="ActionPerformers\ChooseNextPanel.cs" />
+    <Compile Include="ActionPerformers\ChoosePreviousPanel.cs" />
     <Compile Include="ActionPerformers\IActionPerformerBehavior.cs" />
     <Compile Include="ActionPerformers\MoveCursorDown.cs" />
     <Compile Include="ActionPerformers\MoveCursorUp.cs" />

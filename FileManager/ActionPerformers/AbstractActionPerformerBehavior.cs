@@ -24,12 +24,10 @@ namespace FileManager.ActionPerformers
                     return new MoveCursorDown();
                 case ConsoleKey.Enter:
                     return new OpenFileFolder();
-                //case ConsoleKey.RightArrow:
-                //    ChooseNextPanel?.Invoke(this, EventArgs.Empty);
-                //    return true;
-                //case ConsoleKey.LeftArrow:
-                //    ChoosePreviousPanel?.Invoke(this, EventArgs.Empty);
-                //    return true;
+                case ConsoleKey.RightArrow:
+                    return new ChoosePreviousPanel();
+                case ConsoleKey.LeftArrow:
+                    return new ChooseNextPanel();
                 //case ConsoleKey.F1:
                 //    currentItemToOperateOn = listView.SelectedItem;
                 //    currentAction = Actions.Copy;
