@@ -117,7 +117,10 @@ namespace FileManager
             {
                 if (e.action == Actions.Copy)
                 {
+                    var folderToCopy = e.listViewItem.State.FullName;
+                    var folderToPaste = Path.GetDirectoryName(senderInfo.FullName) + "\\" + e.listViewItem.State.Name;
 
+                    Extensions.DirectoryCopy(folderToCopy, folderToPaste);
                 }
 
                 else if (e.action == Actions.Cut)
