@@ -11,6 +11,8 @@ namespace FileManager
     class PanelSet
     {
         public List<ListView> Panels { get; set; }
+        private ListViewItem currentItemToOperateOn;
+        private Actions currentAction;
 
         public PanelSet(int numberOfPanels)
         {
@@ -22,14 +24,69 @@ namespace FileManager
                 Panels.Add(listView);
 
                 listView.Items = GetItems("C:\\");
-                listView.Selected += View_Selected;
-                listView.ChooseNextPanel += View_ChooseNextPanel;
-                listView.ChoosePreviousPanel += View_ChoosePreviousPanel;
-                listView.Paste += View_Paste;
+                Selected += View_Selected;
+                ChooseNextPanel += View_ChooseNextPanel;
+                ChoosePreviousPanel += View_ChoosePreviousPanel;
+                Paste += View_Paste;
             }
 
             Panels[0].Focused = true;
         }
+        public ListView FocusedListView => GetFocusedListView();
+        private ListView GetFocusedListView()
+        {
+            foreach (var listView in Panels)
+            {
+                return listView;
+            }
+            return null;
+        }
+
+        public bool UpdateListView(ConsoleKeyInfo key)
+        {
+            if (!FocusedListView.Focused)
+                return false;
+
+            if (key.Key == ConsoleKey.UpArrow && FocusedListView.SelectedIndex != 0)
+                FocusedListView.SelectedIndex--;
+            else if (key.Key == ConsoleKey.DownArrow && FocusedListView.SelectedIndex < FocusedListView.Items.Count - 1)
+                FocusedListView.SelectedIndex++;
+            else if (key.Key == ConsoleKey.Enter)
+                Selected?.Invoke(this, EventArgs.Empty);
+            else if (key.Key == ConsoleKey.RightArrow)
+            {
+                ChooseNextPanel?.Invoke(this, EventArgs.Empty);
+                return true;
+            }
+            else if (key.Key == ConsoleKey.LeftArrow)
+            {
+                ChoosePreviousPanel?.Invoke(this, EventArgs.Empty);
+                return true;
+            }
+            else if (key.Key == ConsoleKey.F1)
+            {
+                currentItemToOperateOn = FocusedListView.SelectedItem;
+                currentAction = Actions.Copy;
+            }
+            else if (key.Key == ConsoleKey.F2)
+            {
+                currentItemToOperateOn = FocusedListView.SelectedItem;
+                currentAction = Actions.Cut;
+            }
+            else if (key.Key == ConsoleKey.F3)
+            {
+                Paste?.Invoke(this, new CopyCutEventArgs(currentItemToOperateOn, currentAction));
+            }
+
+            return false;
+
+            // TODO: Сделать агрегацию - класс, который использует ListView, отвечает за F1... и содержит уже нестатические поля буфера обмена.
+        }
+
+        public event EventHandler Selected;
+        public event EventHandler ChooseNextPanel;
+        public event EventHandler ChoosePreviousPanel;
+        public event EventHandler<CopyCutEventArgs> Paste;
 
         private void View_Selected(object sender, EventArgs e)
         {

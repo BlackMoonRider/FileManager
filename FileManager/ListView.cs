@@ -27,8 +27,7 @@ namespace FileManager
             }
         }
         private int previouslySelectedIndex;
-        private static ListViewItem currentItemToOperateOn; //
-        private static Actions currentAction; //
+
         public ListViewItem SelectedItem => Items[SelectedIndex];
         public bool Focused { get; set; }
 
@@ -56,6 +55,17 @@ namespace FileManager
         }
         public void Render()
         {
+            if (selectedIndex > height + scroll - 1)
+            {
+                scroll++;
+                isRendered = false;
+            }
+            else if (selectedIndex < scroll)
+            {
+                scroll--;
+                isRendered = false;
+            }
+
             for (int i = 0; i < Math.Min(height, Items.Count); i++)
             {
                 int elementIndex = i + scroll;
@@ -80,62 +90,5 @@ namespace FileManager
             }
             isRendered = true;
         }
-
-        public bool UpdateSelectedIndex(ConsoleKeyInfo key)
-        {
-            if (!Focused)
-                return false;
-
-            if (key.Key == ConsoleKey.UpArrow && SelectedIndex != 0)
-                SelectedIndex--;
-            else if (key.Key == ConsoleKey.DownArrow && SelectedIndex < Items.Count - 1)
-                SelectedIndex++;
-
-            if (selectedIndex > height + scroll - 1)
-            {
-                scroll++;
-                isRendered = false;
-            }
-            else if (selectedIndex < scroll)
-            {
-                scroll--;
-                isRendered = false;
-            }
-            else if (key.Key == ConsoleKey.Enter)
-                Selected?.Invoke(this, EventArgs.Empty);
-            else if (key.Key == ConsoleKey.RightArrow)
-            {
-                ChooseNextPanel?.Invoke(this, EventArgs.Empty);
-                return true;
-            }
-            else if (key.Key == ConsoleKey.LeftArrow)
-            {
-                ChoosePreviousPanel?.Invoke(this, EventArgs.Empty);
-                return true;
-            }
-            else if (key.Key == ConsoleKey.F1)
-            {
-                currentItemToOperateOn = SelectedItem;
-                currentAction = Actions.Copy;
-            }
-            else if (key.Key == ConsoleKey.F2)
-            {
-                currentItemToOperateOn = SelectedItem;
-                currentAction = Actions.Cut;
-            }
-            else if (key.Key == ConsoleKey.F3)
-            {
-                Paste?.Invoke(this, new CopyCutEventArgs(currentItemToOperateOn, currentAction));
-            }
-
-            return false;
-
-            // TODO: Сделать агрегацию - класс, который использует ListView, отвечает за F1... и содержит уже нестатические поля буфера обмена.
-        }
-
-        public event EventHandler Selected;
-        public event EventHandler ChooseNextPanel;
-        public event EventHandler ChoosePreviousPanel;
-        public event EventHandler<CopyCutEventArgs> Paste;
     }
 }

@@ -24,10 +24,11 @@ namespace FileManager
             while (true)
             {
                 var key = Console.ReadKey();
+                panelSet.UpdateListView(key);
                 foreach (ListView listView in panelSet.Panels)
                 {
-                    if (listView.UpdateSelectedIndex(key))
-                        break;
+                    //if (listView.UpdateListView(key))
+                    //    break;
                     listView.Render();
                 }
             }
