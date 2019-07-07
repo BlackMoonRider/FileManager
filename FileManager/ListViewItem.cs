@@ -17,6 +17,7 @@ namespace FileManager
             State = fileSystemInfo;
             this.columns = columns;
         }
+
         public void Render(List<int> columnsWidth, int elementIndex, int listViewX, int listViewY)
         {
             for (int i = 0; i < columns.Length; i++)
@@ -35,7 +36,7 @@ namespace FileManager
                 return v1.Substring(0, maxLength - 5) + "...";
         }
 
-        internal void Clean(List<int> columnWidths, int i, int offsetX, int offsetY)
+        public void Clean(List<int> columnWidths, int i, int offsetX, int offsetY)
         {
             Console.CursorLeft = offsetX;
             Console.CursorTop = i + offsetY;

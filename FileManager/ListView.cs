@@ -11,12 +11,12 @@ namespace FileManager
     {
         public List<int> ColumnWidths { get; set; }
         public List<ListViewItem> Items { get; set; }
-        private bool isRendered;
-
-        private int selectedIndex;
-
-        private int scroll;
         private readonly int offsetX, offsetY, height;
+        private bool isRendered;
+        private int scroll;
+        private int selectedIndex;
+        private int previouslySelectedIndex;
+
         public int SelectedIndex
         {
             get => selectedIndex;
@@ -26,9 +26,9 @@ namespace FileManager
                 selectedIndex = value;
             }
         }
-        private int previouslySelectedIndex;
 
         public ListViewItem SelectedItem => Items[SelectedIndex];
+
         public bool Focused { get; set; }
 
         public ListView(int offsetX, int offsetY, int height, int offsetXMultiplier)
@@ -41,6 +41,7 @@ namespace FileManager
 
             this.height = height; 
         }
+
         public void Clean()
         {
             scroll = 0;
@@ -53,6 +54,7 @@ namespace FileManager
                 Items[i].Clean(ColumnWidths, i, offsetX, offsetY);
             }
         }
+
         public void Render()
         {
             if (selectedIndex > height + scroll - 1)

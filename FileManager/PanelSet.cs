@@ -24,19 +24,15 @@ namespace FileManager
             {
                 ListView listView = new ListView(10, 2, 20, i);
                 Panels.Add(listView);
-
                 listView.Items = GetItems("C:\\");
-                Selected += View_Selected;
-                ChooseNextPanel += View_ChooseNextPanel;
-                ChoosePreviousPanel += View_ChoosePreviousPanel;
-                Paste += View_Paste;
-
                 ActionPerformer = new NoAction();
             }
 
             Panels[0].Focused = true;
         }
+
         public ListView FocusedListView => GetFocusedListView();
+
         public ListView GetFocusedListView()
         {
             foreach (var listView in Panels)
@@ -65,148 +61,6 @@ namespace FileManager
             ActionPerformerArgs args = new ActionPerformerArgs(key, this);
             ActionPerformer = ActionPerformer.GetActionPerformer(args);
             ActionPerformer.Do(args);
-        }
-
-        public bool UpdateListView(ConsoleKeyInfo key)
-        {
-            if (!FocusedListView.Focused)
-                return false;
-
-            if (key.Key == ConsoleKey.UpArrow && FocusedListView.SelectedIndex != 0)
-                FocusedListView.SelectedIndex--;
-            else if (key.Key == ConsoleKey.DownArrow && FocusedListView.SelectedIndex < FocusedListView.Items.Count - 1)
-                FocusedListView.SelectedIndex++;
-            else if (key.Key == ConsoleKey.Enter)
-                Selected?.Invoke(this, EventArgs.Empty);
-            else if (key.Key == ConsoleKey.RightArrow)
-            {
-                ChooseNextPanel?.Invoke(this, EventArgs.Empty);
-                return true;
-            }
-            else if (key.Key == ConsoleKey.LeftArrow)
-            {
-                ChoosePreviousPanel?.Invoke(this, EventArgs.Empty);
-                return true;
-            }
-            else if (key.Key == ConsoleKey.F1)
-            {
-                CurrentItemToOperateOn = FocusedListView.SelectedItem;
-                CurrentAction = Actions.Copy;
-            }
-            else if (key.Key == ConsoleKey.F2)
-            {
-                CurrentItemToOperateOn = FocusedListView.SelectedItem;
-                CurrentAction = Actions.Cut;
-            }
-            else if (key.Key == ConsoleKey.F3)
-            {
-                Paste?.Invoke(this, new CopyCutEventArgs(CurrentItemToOperateOn, CurrentAction));
-            }
-
-            return false;
-
-            // TODO: Сделать агрегацию - класс, который использует ListView, отвечает за F1... и содержит уже нестатические поля буфера обмена.
-        }
-
-        public event EventHandler Selected;
-        public event EventHandler ChooseNextPanel;
-        public event EventHandler ChoosePreviousPanel;
-        public event EventHandler<CopyCutEventArgs> Paste;
-
-        private void View_Selected(object sender, EventArgs e)
-        {
-            ListView listView = (ListView)sender;
-            FileSystemInfo info = listView.SelectedItem.State;
-            if (info is FileInfo file)
-                Process.Start(file.FullName);
-            else if (info is DirectoryInfo directoryInfo)
-            {
-                listView.Clean();
-                listView.Items = GetItems(directoryInfo.FullName);
-            }
-        }
-
-        private void View_ChooseNextPanel(object sender, EventArgs e)
-        {
-            for (int i = 0; i < Panels.Count; i++)
-            {
-                if (Panels[i].Focused)
-                {
-                    Panels[i].Focused = false;
-                    if (i == Panels.Count - 1)
-                        Panels[0].Focused = true;
-                    else
-                        Panels[i + 1].Focused = true;
-                    return;
-                }
-            }
-        }
-
-        private void View_ChoosePreviousPanel(object sender, EventArgs e)
-        {
-            for (int i = 0; i < Panels.Count; i++)
-            {
-                if (Panels[i].Focused)
-                {
-                    Panels[i].Focused = false;
-                    if (i == 0)
-                        Panels[Panels.Count - 1].Focused = true;
-                    else
-                        Panels[i - 1].Focused = true;
-                    return;
-                }
-            }
-        }
-
-        private void View_Paste(object sender, CopyCutEventArgs e)
-        {
-            ListView listView = (ListView)sender;
-            FileSystemInfo senderInfo = listView.SelectedItem.State;
-            FileSystemInfo sourceInfo = e.listViewItem.State;
-
-            if (sourceInfo is FileInfo file)
-            {
-                if (e.action == Actions.Copy)
-                {
-                    var fileToCopy = e.listViewItem.State.FullName;
-                    var fileToPaste = Path.GetDirectoryName(senderInfo.FullName) + "\\" + Path.GetFileName(e.listViewItem.State.FullName);  
-
-                    File.Copy(fileToCopy, fileToPaste);
-                }
-
-                else if (e.action == Actions.Cut)
-                {
-                    var fileToCopy = e.listViewItem.State.FullName;
-                    var fileToPaste = Path.GetDirectoryName(senderInfo.FullName) + "\\" + Path.GetFileName(e.listViewItem.State.FullName);  
-                    File.Move(fileToCopy, fileToPaste);
-                }
-            }
-
-            else if (sourceInfo is DirectoryInfo directoryInfo)
-            {
-                if (e.action == Actions.Copy)
-                {
-                    var folderToCopy = e.listViewItem.State.FullName;
-                    var folderToPaste = Path.GetDirectoryName(senderInfo.FullName) + "\\" + e.listViewItem.State.Name;
-
-                    Extensions.DirectoryCopy(folderToCopy, folderToPaste);
-                }
-
-                else if (e.action == Actions.Cut)
-                {
-                    var folderToCopy = e.listViewItem.State.FullName;
-                    var folderToPaste = Path.GetDirectoryName(senderInfo.FullName) + "\\" + e.listViewItem.State.Name;
-                    
-                    Directory.Move(folderToCopy, folderToPaste);
-                }
-            }
-
-            foreach (var panel in Panels)
-            {
-                panel.Clean();
-                panel.Items = GetItems(Path.GetDirectoryName(panel.SelectedItem.State.FullName));
-                panel.Render();
-            }
         }
     }
 }
