@@ -6,16 +6,17 @@ using System.Threading.Tasks;
 
 namespace FileManager
 {
-    enum Actions
-    {
-        Copy,
-        Cut,
-    }
+    //enum Actions
+    //{
+    //    Copy,
+    //    Cut,
+    //}
+    [Obsolete]
     class CopyCutEventArgs : EventArgs
     {
         public ListViewItem listViewItem;
         public Actions action;
-
+        
         public CopyCutEventArgs(ListViewItem listViewItem, Actions action)
         {
             this.listViewItem = listViewItem;

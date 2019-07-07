@@ -5,13 +5,15 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FileManager.ActionPerformers;
 
 namespace FileManager
 {
     class PanelSet
     {
         public List<ListView> Panels { get; set; }
-        private ListViewItem currentItemToOperateOn;
+        private ListViewItem CurrentItemToOperateOn { get; set; }
+        public IActionPerformerBehavior ActionPerformer { get; private set; }
         private Actions currentAction;
 
         public PanelSet(int numberOfPanels)
@@ -28,6 +30,8 @@ namespace FileManager
                 ChooseNextPanel += View_ChooseNextPanel;
                 ChoosePreviousPanel += View_ChoosePreviousPanel;
                 Paste += View_Paste;
+
+                ActionPerformer = new NoAction();
             }
 
             Panels[0].Focused = true;
@@ -40,6 +44,14 @@ namespace FileManager
                 return listView;
             }
             return null;
+        }
+
+        public void Update(ConsoleKeyInfo key)
+        {
+            ActionPerformerArgs args = new ActionPerformerArgs(key, FocusedListView);
+            ActionPerformer = ActionPerformer.GetActionPerformer(args);
+            //ActionPerformer.Do(FocusedListView, new ActionPerformerArgs());
+            ActionPerformer.Do(args);
         }
 
         public bool UpdateListView(ConsoleKeyInfo key)
@@ -65,17 +77,17 @@ namespace FileManager
             }
             else if (key.Key == ConsoleKey.F1)
             {
-                currentItemToOperateOn = FocusedListView.SelectedItem;
+                CurrentItemToOperateOn = FocusedListView.SelectedItem;
                 currentAction = Actions.Copy;
             }
             else if (key.Key == ConsoleKey.F2)
             {
-                currentItemToOperateOn = FocusedListView.SelectedItem;
+                CurrentItemToOperateOn = FocusedListView.SelectedItem;
                 currentAction = Actions.Cut;
             }
             else if (key.Key == ConsoleKey.F3)
             {
-                Paste?.Invoke(this, new CopyCutEventArgs(currentItemToOperateOn, currentAction));
+                Paste?.Invoke(this, new CopyCutEventArgs(CurrentItemToOperateOn, currentAction));
             }
 
             return false;

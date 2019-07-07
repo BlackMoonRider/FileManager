@@ -42,6 +42,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionPerformers\AbstractActionPerformerBehavior.cs" />
+    <Compile Include="ActionPerformers\ActionPerformerArgs.cs" />
+    <Compile Include="ActionPerformers\IActionPerformerBehavior.cs" />
+    <Compile Include="ActionPerformers\MoveCursorDown.cs" />
+    <Compile Include="ActionPerformers\MoveCursorUp.cs" />
+    <Compile Include="ActionPerformers\NoAction.cs" />
     <Compile Include="CopyCutEventArgs.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="ListView.cs" />

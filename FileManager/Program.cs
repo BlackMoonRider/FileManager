@@ -24,7 +24,8 @@ namespace FileManager
             while (true)
             {
                 var key = Console.ReadKey();
-                panelSet.UpdateListView(key);
+                //panelSet.UpdateListView(key);
+                panelSet.Update(key);
                 foreach (ListView listView in panelSet.Panels)
                 {
                     //if (listView.UpdateListView(key))
