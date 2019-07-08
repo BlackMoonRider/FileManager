@@ -18,7 +18,7 @@ namespace FileManager.ActionPerformers
 
             switch (key.Key)
             {
-                case ConsoleKey.UpArrow when listView.SelectedIndex != 0:
+                case ConsoleKey.UpArrow when listView.SelectedIndex != 0: // TODO: Move these constraints to the methods being called
                     return new MoveCursorUp();
                 case ConsoleKey.DownArrow when listView.SelectedIndex < listView.Items.Count - 1:
                     return new MoveCursorDown();
@@ -36,6 +36,10 @@ namespace FileManager.ActionPerformers
                     return new Cut();
                 case ConsoleKey.F4:
                     return new Paste();
+                //case ConsoleKey.F5:
+                //    return new NavigateToRoot();
+                //case ConsoleKey.Backspace:
+                //    return new NavigateUpwards();
 #if DEBUG
                 case ConsoleKey.F12:
                     return new Test();

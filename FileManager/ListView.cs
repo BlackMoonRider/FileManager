@@ -27,7 +27,7 @@ namespace FileManager
             }
         }
 
-        public ListViewItem SelectedItem => Items[SelectedIndex]; // Fix copying to an emoty folder
+        public ListViewItem SelectedItem => Items[SelectedIndex]; // TODO: Fix copying to an empty folder
 
         public bool Focused { get; set; }
 
@@ -81,7 +81,7 @@ namespace FileManager
                 if (elementIndex == selectedIndex)
                 {
                     Console.ForegroundColor = ConsoleColor.Black;
-                    Console.BackgroundColor = ConsoleColor.White;
+                    Console.BackgroundColor = Focused ? ConsoleColor.White : ConsoleColor.DarkGray;
                 }
                 Console.CursorLeft = offsetX;
                 Console.CursorTop = i + offsetY;
