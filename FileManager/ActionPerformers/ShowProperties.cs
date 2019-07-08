@@ -25,7 +25,7 @@ namespace FileManager.ActionPerformers
                 stringBuilder.AppendLine("Read-only:\t" + ((readOnly == 1) ? "true" : "false"));
                 stringBuilder.AppendLine("Last read time:\t" + sourceInfo.LastAccessTime);
                 stringBuilder.AppendLine("Last write time:\t" + sourceInfo.LastWriteTime);
-                stringBuilder.AppendLine("Size:\t\t" + fileInfo.Length);
+                stringBuilder.AppendLine("Size:\t\t" + fileInfo.Length.NormalizeSize());
 
                 info = stringBuilder.ToString();
             }
@@ -38,9 +38,9 @@ namespace FileManager.ActionPerformers
                 stringBuilder.AppendLine("Read-only:\t" + ((readOnly == 1) ? "true" : "false"));
                 stringBuilder.AppendLine("Last read time:\t" + sourceInfo.LastAccessTime);
                 stringBuilder.AppendLine("Last write time:\t" + sourceInfo.LastWriteTime);
-                stringBuilder.AppendLine("Size:\t\t" + directoryInfo.DirectorySize());
-                stringBuilder.AppendLine("Files:\t\t" + Directory.GetDirectories(sourceInfo.FullName).Count());
-                stringBuilder.AppendLine("Folders:\t\t" + Directory.GetFiles(sourceInfo.FullName).Count());
+                stringBuilder.AppendLine("Size:\t\t" + directoryInfo.DirectorySize().NormalizeSize());
+                stringBuilder.AppendLine("Files:\t\t" + Directory.GetFiles(sourceInfo.FullName).Count());
+                stringBuilder.AppendLine("Folders:\t\t" + Directory.GetDirectories(sourceInfo.FullName).Count());
 
                 info = stringBuilder.ToString();
             }

@@ -51,6 +51,34 @@ namespace FileManager
             return (ulong)folder.size;
         }
 
+        public static string NormalizeSize(this long bytes) => NormalizeSize((ulong)bytes);
+        public static string NormalizeSize(this int bytes) => NormalizeSize((ulong)bytes);
+
+        public static string NormalizeSize(this ulong bytes)
+        {
+            if (bytes < 1024)
+                return $"{bytes} Byte";
+
+            ulong kbytes = bytes / 1024;
+
+            if (kbytes < 1024)
+                return $"{kbytes} KB";
+
+            ulong mbytes = kbytes / 1024;
+
+            if (mbytes < 1024)
+                return $"{mbytes} MB";
+
+            ulong gbytes = mbytes / 1024;
+
+            if (gbytes < 1024)
+                return $"{gbytes} GB";
+
+            ulong tbytes = gbytes / 1024;
+
+            return $"{kbytes} TB";
+        }
+
         public static void RefreshScreen(PanelSet panelSet)
         {
             Console.Clear();
