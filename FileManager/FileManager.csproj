@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstarctListViewItem.cs" />
     <Compile Include="ActionPerformers\AbstractActionPerformerBehavior.cs" />
     <Compile Include="ActionPerformers\ActionPerformerArgs.cs" />
     <Compile Include="ActionPerformers\ChooseNextPanel.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="ListViewItem.cs" />
     <Compile Include="PanelSet.cs" />
     <Compile Include="PopupInput.cs" />
+    <Compile Include="PopupList.cs" />
     <Compile Include="PopupMessage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

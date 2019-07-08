@@ -86,7 +86,7 @@ namespace FileManager
             foreach (var panel in panelSet.Panels)
             {
                 panel.Clean();
-                panel.Items = panelSet.GetItems(Path.GetDirectoryName(panel.SelectedItem.State.FullName));
+                panel.Items = panelSet.GetItems(Path.GetDirectoryName(panel.SelectedItem.Item.FullName));
                 panel.Render();
             }
         }

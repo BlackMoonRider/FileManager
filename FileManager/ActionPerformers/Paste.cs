@@ -11,8 +11,8 @@ namespace FileManager.ActionPerformers
     {
         public override void Do(ActionPerformerArgs actionPerformerArgs)
         {
-            FileSystemInfo senderInfo = actionPerformerArgs.PanelSet.FocusedListView.SelectedItem.State;
-            FileSystemInfo sourceInfo = actionPerformerArgs.PanelSet.CurrentItemToOperateOn.State;
+            FileSystemInfo senderInfo = actionPerformerArgs.PanelSet.FocusedListView.SelectedItem.Item;
+            FileSystemInfo sourceInfo = actionPerformerArgs.PanelSet.CurrentItemToOperateOn.Item;
 
             var action = actionPerformerArgs.PanelSet.CurrentAction;
 

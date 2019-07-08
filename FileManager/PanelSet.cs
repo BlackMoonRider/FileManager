@@ -12,7 +12,7 @@ namespace FileManager
     class PanelSet
     {
         public List<ListView> Panels { get; set; }
-        public ListViewItem CurrentItemToOperateOn { get; set; }
+        public ListViewItem<FileSystemInfo> CurrentItemToOperateOn { get; set; }
         public IActionPerformerBehavior ActionPerformer { get; private set; }
         public Actions CurrentAction;
 
@@ -43,12 +43,12 @@ namespace FileManager
             return null;
         }
 
-        public List<ListViewItem> GetItems(string path)
+        public List<ListViewItem<FileSystemInfo>> GetItems(string path)
         {
             return new DirectoryInfo(path)
                 .GetFileSystemInfos()
                 .Select(
-                lvi => new ListViewItem(
+                lvi => new ListViewItem<FileSystemInfo>(
                 lvi,
                 lvi.Name,
                 lvi is DirectoryInfo dir ? "<dir>" : lvi.Extension,

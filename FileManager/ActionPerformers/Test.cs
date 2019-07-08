@@ -13,7 +13,7 @@ namespace FileManager.ActionPerformers
             string message = @"Hello
 world
 many lines";
-            PopupMessage popup = new PopupMessage(actionPerformerArgs.PanelSet, message);
+            PopupList popup = new PopupList(actionPerformerArgs.PanelSet, message);
 
             popup.Render();
         }

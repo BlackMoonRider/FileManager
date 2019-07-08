@@ -11,7 +11,7 @@ namespace FileManager.ActionPerformers
     {
         public override void Do(ActionPerformerArgs actionPerformerArgs)
         {
-            var sourceInfo = actionPerformerArgs.PanelSet.FocusedListView.SelectedItem.State;
+            var sourceInfo = actionPerformerArgs.PanelSet.FocusedListView.SelectedItem.Item;
             StringBuilder stringBuilder = new StringBuilder();
 
             string info = String.Empty;

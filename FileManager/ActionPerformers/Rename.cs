@@ -11,7 +11,7 @@ namespace FileManager.ActionPerformers
     {
         public override void Do(ActionPerformerArgs actionPerformerArgs)
         {
-            FileSystemInfo senderInfo = actionPerformerArgs.PanelSet.FocusedListView.SelectedItem.State;
+            FileSystemInfo senderInfo = actionPerformerArgs.PanelSet.FocusedListView.SelectedItem.Item;
             var source = senderInfo.FullName;
 
             PopupInput popupInput = new PopupInput(actionPerformerArgs.PanelSet);

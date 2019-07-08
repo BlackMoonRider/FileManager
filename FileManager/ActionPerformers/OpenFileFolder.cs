@@ -13,7 +13,7 @@ namespace FileManager.ActionPerformers
         public override void Do(ActionPerformerArgs actionPerformerArgs)
         {
             ListView listView = actionPerformerArgs.PanelSet.FocusedListView;
-            FileSystemInfo info = listView.SelectedItem.State;
+            FileSystemInfo info = listView.SelectedItem.Item;
             if (info is FileInfo file)
                 Process.Start(file.FullName);
             else if (info is DirectoryInfo directoryInfo)

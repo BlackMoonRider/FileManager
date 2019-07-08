@@ -10,7 +10,7 @@ namespace FileManager
     class ListView
     {
         public List<int> ColumnWidths { get; set; }
-        public List<ListViewItem> Items { get; set; }
+        public List<ListViewItem<FileSystemInfo>> Items { get; set; }
         private readonly int offsetX, offsetY, height;
         private bool isRendered;
         private int scroll;
@@ -27,7 +27,7 @@ namespace FileManager
             }
         }
 
-        public ListViewItem SelectedItem => Items[SelectedIndex]; // TODO: Fix copying to an empty folder
+        public ListViewItem<FileSystemInfo> SelectedItem => Items[SelectedIndex]; // TODO: Fix copying to an empty folder
 
         public bool Focused { get; set; }
 

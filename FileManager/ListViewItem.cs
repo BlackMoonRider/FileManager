@@ -7,18 +7,11 @@ using System.Threading.Tasks;
 
 namespace FileManager
 {
-    class ListViewItem
+    class ListViewItem<T> : AbstarctListViewItem<T>
     {
-        private readonly string[] columns;
-        public FileSystemInfo State { get; set; }
+        public ListViewItem(T item, params string[] columns) : base (item, columns) { }
 
-        public ListViewItem(FileSystemInfo fileSystemInfo, params string[] columns)
-        {
-            State = fileSystemInfo;
-            this.columns = columns;
-        }
-
-        public void Render(List<int> columnsWidth, int elementIndex, int listViewX, int listViewY)
+        override public void Render(List<int> columnsWidth, int elementIndex, int listViewX, int listViewY)
         {
             for (int i = 0; i < columns.Length; i++)
             {
@@ -36,11 +29,5 @@ namespace FileManager
                 return v1.Substring(0, maxLength - 5) + "...";
         }
 
-        public void Clean(List<int> columnWidths, int i, int offsetX, int offsetY)
-        {
-            Console.CursorLeft = offsetX;
-            Console.CursorTop = i + offsetY;
-            Console.Write(new string(' ', columnWidths.Sum()));
-        }
     }
 }
