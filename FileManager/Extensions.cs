@@ -44,6 +44,13 @@ namespace FileManager
             }
         }
 
+        public static ulong DirectorySize(this DirectoryInfo directoryInfo)
+        {
+            dynamic fileSystemObject = Activator.CreateInstance(Type.GetTypeFromProgID("Scripting.FileSystemObject"));
+            dynamic folder = fileSystemObject.GetFolder(directoryInfo.FullName);
+            return (ulong)folder.size;
+        }
+
         public static void RefreshScreen(PanelSet panelSet)
         {
             Console.Clear();

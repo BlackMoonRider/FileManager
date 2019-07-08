@@ -16,7 +16,7 @@ namespace FileManager.ActionPerformers
 
             PopupInput popupInput = new PopupInput(actionPerformerArgs.PanelSet);
             popupInput.Render();
-            string newName = popupInput.NewName;
+            string newName = popupInput.UserInputResult;
 
             var destination = Path.GetDirectoryName(source) + "\\" + newName;
 

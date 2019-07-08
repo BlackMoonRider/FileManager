@@ -6,15 +6,14 @@ using System.Threading.Tasks;
 
 namespace FileManager
 {
-    class PopupInput
+    class PopupMessage
     {
         private readonly int offsetX, offsetY, height, width;
+        private readonly string header;
         // private bool isRendered;
         private PanelSet panelSet;
 
-        public string UserInputResult { get; private set; }
-
-        public PopupInput(int offsetX, int offsetY, int height, int width, PanelSet panelSet)
+        public PopupMessage(int offsetX, int offsetY, int height, int width, PanelSet panelSet, string header)
         {
             this.offsetX = offsetX;
             this.offsetY = offsetY;
@@ -23,11 +22,13 @@ namespace FileManager
             this.width = width;
 
             this.panelSet = panelSet;
+            this.header = header;
         }
 
-        public PopupInput(PanelSet panelSet)
+        public PopupMessage(PanelSet panelSet, string header)
         {
             this.panelSet = panelSet;
+            this.header = header;
 
             width = 30;
             height = 10;
@@ -53,33 +54,21 @@ namespace FileManager
                 Console.WriteLine(background);
             }
 
-            string newName = String.Empty;
+            var lines = header.Split(new string[] { "\r\n" }, StringSplitOptions.None);
 
-            while (NameIsValid(newName))
+            for (int i = 0; i < lines.Length; i++)
             {
-                Console.CursorTop = offsetY + 1;
+                Console.CursorTop = offsetY + i;
                 Console.CursorLeft = offsetX + 1;
-                Console.WriteLine("Enter new name:");
-
-                Console.CursorTop = offsetY + 3;
-                Console.CursorLeft = offsetX + 1;
-                newName = Console.ReadLine();
+                Console.WriteLine(lines[i]);
             }
 
-            UserInputResult = newName;
+            Console.ReadKey();
 
             Console.ForegroundColor = savedForegroundColor;
             Console.BackgroundColor = savedBackgroundColor;
 
             Extensions.RefreshScreen(panelSet);
-        }
-
-        private bool NameIsValid(string name) // TODO: Add all real Windows names constraints 
-        {
-            if (String.IsNullOrWhiteSpace(name))
-                return true;
-            else
-                return false;
         }
     }
 }

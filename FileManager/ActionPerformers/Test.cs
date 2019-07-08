@@ -10,9 +10,12 @@ namespace FileManager.ActionPerformers
     {
         public override void Do(ActionPerformerArgs actionPerformerArgs)
         {
-            PopupInput popupInput = new PopupInput(actionPerformerArgs.PanelSet);
+            string message = @"Hello
+world
+many lines";
+            PopupMessage popup = new PopupMessage(actionPerformerArgs.PanelSet, message);
 
-            popupInput.Render();
+            popup.Render();
         }
     }
 }

@@ -38,6 +38,8 @@ namespace FileManager.ActionPerformers
                     return new Paste();
                 //case ConsoleKey.F5:
                 //    return new NavigateToRoot();
+                case ConsoleKey.F6:
+                    return new ShowProperties();
                 //case ConsoleKey.Backspace:
                 //    return new NavigateUpwards();
 #if DEBUG
