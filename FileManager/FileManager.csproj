@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstarctListViewItem.cs" />
+    <Compile Include="AbstractListView.cs" />
     <Compile Include="ActionPerformers\AbstractActionPerformerBehavior.cs" />
     <Compile Include="ActionPerformers\ActionPerformerArgs.cs" />
     <Compile Include="ActionPerformers\ChooseNextPanel.cs" />

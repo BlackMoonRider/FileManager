@@ -7,42 +7,13 @@ using System.Threading.Tasks;
 
 namespace FileManager
 {
-    class ListView
+    class ListView : AbstractListView<ListViewItem<FileSystemInfo>>
     {
-        public List<int> ColumnWidths { get; set; }
-        public List<ListViewItem<FileSystemInfo>> Items { get; set; }
-        private readonly int offsetX, offsetY, height;
-        private bool isRendered;
-        private int scroll;
-        private int selectedIndex;
-        private int previouslySelectedIndex;
+        public ListView(int offsetX, int offsetY, int height, int offsetXMultiplier) 
+            : base(offsetX, offsetY, height, offsetXMultiplier)
+        { }
 
-        public int SelectedIndex
-        {
-            get => selectedIndex;
-            set
-            {
-                previouslySelectedIndex = selectedIndex;
-                selectedIndex = value;
-            }
-        }
-
-        public ListViewItem<FileSystemInfo> SelectedItem => Items[SelectedIndex]; // TODO: Fix copying to an empty folder
-
-        public bool Focused { get; set; }
-
-        public ListView(int offsetX, int offsetY, int height, int offsetXMultiplier)
-        {
-            ColumnWidths = new List<int> { 32, 10, 10 };
-
-            this.offsetX = offsetX + offsetXMultiplier * ColumnWidths.Sum() + 
-                (offsetXMultiplier > 0 ? 2 : 0);
-            this.offsetY = offsetY;
-
-            this.height = height; 
-        }
-
-        public void Clean()
+        override public void Clean()
         {
             scroll = 0;
             selectedIndex = previouslySelectedIndex = 0;
@@ -55,18 +26,9 @@ namespace FileManager
             }
         }
 
-        public void Render()
+        override public void Render()
         {
-            if (selectedIndex > height + scroll - 1)
-            {
-                scroll++;
-                isRendered = false;
-            }
-            else if (selectedIndex < scroll)
-            {
-                scroll--;
-                isRendered = false;
-            }
+            base.Render();
 
             for (int i = 0; i < Math.Min(height, Items.Count); i++)
             {

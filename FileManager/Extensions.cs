@@ -79,6 +79,9 @@ namespace FileManager
             return $"{kbytes} TB";
         }
 
+        //public static void Clean<T>(this T list, List<int> columnWidths, int i, int offsetX, int offsetY) { }
+        //public static void Render<T>(this T list, List<int> columnWidths, int i, int offsetX, int offsetY) { }
+
         public static void RefreshScreen(PanelSet panelSet)
         {
             Console.Clear();
