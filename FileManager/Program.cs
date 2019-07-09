@@ -37,7 +37,7 @@ namespace FileManager
                 foreach (ListView<FileSystemInfo> listView in panelSet.Panels)
                 {
                     listView.Render();
-                    legend.Render();
+                    //legend.Render();
                 }
             }
         }
