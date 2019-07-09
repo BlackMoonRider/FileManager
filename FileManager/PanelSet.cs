@@ -12,6 +12,7 @@ namespace FileManager
     class PanelSet
     {
         public List<ListView<FileSystemInfo>> Panels { get; set; }
+        public PopupList Modal { get; set; }
         public ListViewItem<FileSystemInfo> CurrentItemToOperateOn { get; set; }
         public ListView<FileSystemInfo> FocusedPanel
         {
@@ -76,7 +77,7 @@ namespace FileManager
                 lvi,
                 lvi.Name,
                 lvi is DirectoryInfo dir ? "<dir>" : lvi.Extension,
-                lvi is FileInfo file ? file.Length.ToString() : ""))
+                lvi is FileInfo file ? Extensions.NormalizeSize(file.Length) : ""))
                 .ToList();
         }
 
@@ -86,7 +87,32 @@ namespace FileManager
             {
                 case ConsoleKey.UpArrow:
                 case ConsoleKey.DownArrow:
-                    FocusedPanel.Update(key);
+                    if (Modal == null)
+                        FocusedPanel.Update(key);
+                    else
+                    {
+                        Modal.ListView.Update(key);
+                        Modal.ListView.Render();
+                    }
+                    break;
+                case ConsoleKey.Enter:
+                    if (Modal == null)
+                        goto default;
+                    else
+                    {
+                        FocusedPanel.Current = new DirectoryInfo(Modal.ListView.SelectedItem.Item.FullName);
+                        Modal = null;
+                        Extensions.RefreshScreen(this);
+                    }
+                    break;
+                case ConsoleKey.Escape:
+                    if (Modal == null)
+                        goto default;
+                    else
+                    {
+                        Modal = null;
+                        Extensions.RefreshScreen(this);
+                    }
                     break;
                 default:
                     ActionPerformerArgs args = new ActionPerformerArgs(key, this);
@@ -94,8 +120,6 @@ namespace FileManager
                     ActionPerformer.Do(args);
                     break;
             }
-
-            
         }
     }
 }

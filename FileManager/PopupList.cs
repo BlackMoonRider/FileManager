@@ -13,13 +13,12 @@ namespace FileManager
         private readonly int offsetX, offsetY, height, width;
         private readonly string header;
         // private bool isRendered;
-        private PanelSet panelSet;
-        private readonly ListView<FileSystemInfo> listView;
-        private readonly DriveInfo[] driveInfos = DriveInfo.GetDrives();
+        public readonly ListView<DirectoryInfo> ListView;
+        // private readonly DriveInfo[] driveInfos = DriveInfo.GetDrives();
 
         public IActionPerformerBehavior ActionPerformer { get; private set; }
 
-        public PopupList(int offsetX, int offsetY, int height, int width, PanelSet panelSet, string header)
+        public PopupList(int offsetX, int offsetY, int height, int width, string header)
         {
             this.offsetX = offsetX;
             this.offsetY = offsetY;
@@ -27,15 +26,14 @@ namespace FileManager
             this.height = height;
             this.width = width;
 
-            this.panelSet = panelSet;
             this.header = header;
 
-            listView = new ListView<FileSystemInfo>(offsetX, offsetX, height, 1);
+            ListView = new ListView<DirectoryInfo>(offsetX, offsetX, height, 1);
+            ActionPerformer = new NoAction();
         }
 
-        public PopupList(PanelSet panelSet, string header)
+        public PopupList(string header)
         {
-            this.panelSet = panelSet;
             this.header = header;
 
             width = 30;
@@ -44,7 +42,11 @@ namespace FileManager
             offsetX = Console.WindowWidth / 2 - width / 2;
             offsetY = Console.WindowHeight / 2 - height / 2;
 
-            listView = new ListView<FileSystemInfo>(offsetX, offsetX, height, 1);
+            ListView = new ListView<DirectoryInfo>(offsetX, offsetX, height, 1);
+            ListView.Focused = true;
+            ListView.Items = DriveInfo.GetDrives().Where(d => d.IsReady).Select(d => new ListViewItem<DirectoryInfo>(d.RootDirectory, d.RootDirectory.FullName)).ToList();
+
+            ActionPerformer = new NoAction();
         }
 
         public void Render()
@@ -66,26 +68,35 @@ namespace FileManager
 
             var lines = header.Split(new string[] { "\r\n" }, StringSplitOptions.None);
 
-            for (int i = 0; i < lines.Length; i++)
-            {
-                Console.CursorTop = offsetY + i;
-                Console.CursorLeft = offsetX + 1;
-                Console.WriteLine(lines[i]);
-            }
+            //for (int i = 0; i < listView.Items.Count; i++)
+            //{
+            //    Console.CursorTop = offsetY + i;
+            //    Console.CursorLeft = offsetX + 1;
+            //    Console.WriteLine(listView.Items[i].Item.FullName);
+            //}
 
-            Console.ReadKey();
+            ListView.Render();
+
+            //Console.ReadKey();
 
             Console.ForegroundColor = savedForegroundColor;
             Console.BackgroundColor = savedBackgroundColor;
-
-            Extensions.RefreshScreen(panelSet);
         }
 
         public void Update(ConsoleKeyInfo key)
         {
-            ActionPerformerArgs args = new ActionPerformerArgs(key, this);
-            ActionPerformer = ActionPerformer.GetActionPerformer(args);
-            ActionPerformer.Do(args);
+            switch (key.Key)
+            {
+                case ConsoleKey.UpArrow:
+                case ConsoleKey.DownArrow:
+                    ListView.Update(key);
+                    break;
+                default:
+                    ActionPerformerArgs args = new ActionPerformerArgs(key, this);
+                    ActionPerformer = ActionPerformer.GetActionPerformer(args);
+                    ActionPerformer.Do(args);
+                    break;
+            }
         }
     }
 }
