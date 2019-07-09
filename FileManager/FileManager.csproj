@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="AbstarctListViewItem.cs" />
     <Compile Include="AbstractListView.cs" />
+    <Compile Include="Popups\AbstractPopup.cs" />
     <Compile Include="ActionPerformers\AbstarctListViewItem.cs" />
     <Compile Include="ActionPerformers\AbstractActionPerformerBehavior.cs" />
     <Compile Include="ActionPerformers\ActionPerformerArgs.cs" />
@@ -67,9 +68,9 @@
     <Compile Include="ListView.cs" />
     <Compile Include="ListViewItem.cs" />
     <Compile Include="PanelSet.cs" />
-    <Compile Include="PopupInput.cs" />
-    <Compile Include="PopupList.cs" />
-    <Compile Include="PopupMessage.cs" />
+    <Compile Include="Popups\PopupInput.cs" />
+    <Compile Include="Popups\PopupList.cs" />
+    <Compile Include="Popups\PopupMessage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
