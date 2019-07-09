@@ -11,7 +11,16 @@ namespace FileManager
         private PanelSet panelSet;
         private string message;
 
+        //public PopupMessage(int height, int width, string header) : base(height, width, header)
+        //{ }
+
         public PopupMessage(PanelSet panelSet, string message, string header = "Info") : base(header)
+        {
+            this.panelSet = panelSet;
+            this.message = message;
+        }
+
+        public PopupMessage(string message, string header = "Info") : base(header)
         {
             this.panelSet = panelSet;
             this.message = message;
@@ -34,7 +43,8 @@ namespace FileManager
 
             RestoreBackgroundColors();
 
-            Extensions.RefreshScreen(panelSet);
+            if (panelSet != null)
+                Extensions.RefreshScreen(panelSet);
         }
     }
 }
