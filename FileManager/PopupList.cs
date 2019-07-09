@@ -28,7 +28,7 @@ namespace FileManager
 
             this.header = header;
 
-            ListView = new ListView<DirectoryInfo>(offsetX, offsetX, height, 1);
+            ListView = new ListView<DirectoryInfo>(offsetX, offsetY, height, 0);
             ActionPerformer = new NoAction();
         }
 
@@ -42,9 +42,10 @@ namespace FileManager
             offsetX = Console.WindowWidth / 2 - width / 2;
             offsetY = Console.WindowHeight / 2 - height / 2;
 
-            ListView = new ListView<DirectoryInfo>(offsetX, offsetX, height, 1);
+            ListView = new ListView<DirectoryInfo>(offsetX, offsetY, height, 0);
             ListView.Focused = true;
-            ListView.Items = DriveInfo.GetDrives().Where(d => d.IsReady).Select(d => new ListViewItem<DirectoryInfo>(d.RootDirectory, d.RootDirectory.FullName)).ToList();
+            ListView.ColumnWidths = new List<int>() { 6, 14, 10 };
+            ListView.Items = DriveInfo.GetDrives().Where(d => d.IsReady).Select(d => new ListViewItem<DirectoryInfo>(d.RootDirectory, d.RootDirectory.FullName, d.VolumeLabel, Extensions.NormalizeSize(d.TotalSize))).ToList();
 
             ActionPerformer = new NoAction();
         }
