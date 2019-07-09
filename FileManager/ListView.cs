@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FileManager.ActionPerformers;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -56,5 +57,6 @@ namespace FileManager
             }
             isRendered = true;
         }
+
     }
 }

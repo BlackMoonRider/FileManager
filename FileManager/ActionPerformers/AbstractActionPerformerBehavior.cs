@@ -15,13 +15,12 @@ namespace FileManager.ActionPerformers
         public IActionPerformerBehavior GetActionPerformer(ActionPerformerArgs actionPerformerArgs)
         {
             ConsoleKeyInfo key = actionPerformerArgs.Key;
-            ListView<FileSystemInfo> listView = actionPerformerArgs.PanelSet.FocusedListView;
 
             switch (key.Key)
             {
-                case ConsoleKey.UpArrow when listView.SelectedIndex != 0: // TODO: Move these constraints to the methods being called
+                case ConsoleKey.UpArrow:
                     return new MoveCursorUp();
-                case ConsoleKey.DownArrow when listView.SelectedIndex < listView.Items.Count - 1:
+                case ConsoleKey.DownArrow:
                     return new MoveCursorDown();
                 case ConsoleKey.Enter:
                     return new OpenFileFolder();

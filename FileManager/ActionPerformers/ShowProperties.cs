@@ -11,7 +11,9 @@ namespace FileManager.ActionPerformers
     {
         public override void Do(ActionPerformerArgs actionPerformerArgs)
         {
-            var sourceInfo = actionPerformerArgs.PanelSet.FocusedListView.SelectedItem.Item;
+            PanelSet panelSet = (PanelSet)actionPerformerArgs.Sender;
+
+            var sourceInfo = panelSet.FocusedListView.SelectedItem.Item;
             StringBuilder stringBuilder = new StringBuilder();
 
             string info = String.Empty;
@@ -45,10 +47,10 @@ namespace FileManager.ActionPerformers
                 info = stringBuilder.ToString();
             }
 
-            PopupMessage popupMessage = new PopupMessage(actionPerformerArgs.PanelSet, info);
+            PopupMessage popupMessage = new PopupMessage(panelSet, info);
             popupMessage.Render();
 
-            Extensions.RefreshScreen(actionPerformerArgs.PanelSet);
+            Extensions.RefreshScreen(panelSet);
         }
     }
 }

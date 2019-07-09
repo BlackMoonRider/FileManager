@@ -11,10 +11,12 @@ namespace FileManager.ActionPerformers
     {
         public override void Do(ActionPerformerArgs actionPerformerArgs)
         {
-            FileSystemInfo senderInfo = actionPerformerArgs.PanelSet.FocusedListView.SelectedItem.Item;
+            PanelSet panelSet = (PanelSet)actionPerformerArgs.Sender;
+
+            FileSystemInfo senderInfo = panelSet.FocusedListView.SelectedItem.Item;
             var source = senderInfo.FullName;
 
-            PopupInput popupInput = new PopupInput(actionPerformerArgs.PanelSet);
+            PopupInput popupInput = new PopupInput(panelSet);
             popupInput.Render();
             string newName = popupInput.UserInputResult;
 
@@ -30,7 +32,7 @@ namespace FileManager.ActionPerformers
                 Directory.Move(source, destination);
             }
 
-            Extensions.RefreshScreen(actionPerformerArgs.PanelSet);
+            Extensions.RefreshScreen(panelSet);
         }
     }
 }

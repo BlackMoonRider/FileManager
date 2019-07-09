@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FileManager.ActionPerformers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,8 @@ namespace FileManager
         protected int selectedIndex;
         protected int previouslySelectedIndex;
 
+        public IActionPerformerBehavior ActionPerformer { get; private set; } = new NoAction();
+
         public int SelectedIndex
         {
             get => selectedIndex;
@@ -29,6 +32,7 @@ namespace FileManager
         public T SelectedItem => Items[SelectedIndex]; // TODO: Fix copying to an empty folder
 
         public bool Focused { get; set; }
+        //public object ActionPerformer { get; private set; }
 
         public AbstractListView(int offsetX, int offsetY, int height, int offsetXMultiplier)
         {
@@ -55,6 +59,13 @@ namespace FileManager
                 scroll--;
                 isRendered = false;
             }
+        }
+
+        public void Update(ConsoleKeyInfo key)
+        {
+            ActionPerformerArgs args = new ActionPerformerArgs(key, this);
+            ActionPerformer = ActionPerformer.GetActionPerformer(args);
+            ActionPerformer.Do(args);
         }
     }
 }

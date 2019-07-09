@@ -11,11 +11,13 @@ namespace FileManager.ActionPerformers
     {
         public override void Do(ActionPerformerArgs actionPerformerArgs)
         {
-            var root = Path.GetPathRoot(actionPerformerArgs.PanelSet.FocusedListView.SelectedItem.Item.FullName);
+            PanelSet panelSet = (PanelSet)actionPerformerArgs.Sender;
 
-            actionPerformerArgs.PanelSet.FocusedListView.Current = new DirectoryInfo(root);
+            var root = Path.GetPathRoot(panelSet.FocusedListView.SelectedItem.Item.FullName);
 
-            Extensions.RefreshFocusedPanel(actionPerformerArgs.PanelSet);
+            panelSet.FocusedListView.Current = new DirectoryInfo(root);
+
+            Extensions.RefreshFocusedPanel(panelSet);
         }
     }
 }

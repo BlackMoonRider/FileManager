@@ -11,12 +11,14 @@ namespace FileManager.ActionPerformers
     {
         public override void Do(ActionPerformerArgs actionPerformerArgs)
         {
-            var parent = Directory.GetParent(Directory.GetParent(actionPerformerArgs.PanelSet.FocusedListView.SelectedItem.Item.FullName).FullName)
-                ?? new DirectoryInfo(Path.GetPathRoot(actionPerformerArgs.PanelSet.FocusedListView.SelectedItem.Item.FullName));
+            PanelSet panelSet = (PanelSet)actionPerformerArgs.Sender;
 
-            actionPerformerArgs.PanelSet.FocusedListView.Current = parent;
+            var parent = Directory.GetParent(Directory.GetParent(panelSet.FocusedListView.SelectedItem.Item.FullName).FullName)
+                ?? new DirectoryInfo(Path.GetPathRoot(panelSet.FocusedListView.SelectedItem.Item.FullName));
 
-            Extensions.RefreshFocusedPanel(actionPerformerArgs.PanelSet);
+            panelSet.FocusedListView.Current = parent;
+
+            Extensions.RefreshFocusedPanel(panelSet);
         }
     }
 }

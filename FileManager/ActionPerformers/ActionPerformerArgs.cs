@@ -16,12 +16,12 @@ namespace FileManager
     class ActionPerformerArgs
     {
         public ConsoleKeyInfo Key;
-        public PanelSet PanelSet;
+        public object Sender;
 
-        public ActionPerformerArgs(ConsoleKeyInfo key, PanelSet panelSet)
+        public ActionPerformerArgs(ConsoleKeyInfo key, object sender)
         {
             Key = key;
-            PanelSet = panelSet;
+            Sender = sender;
         }
     }
 }

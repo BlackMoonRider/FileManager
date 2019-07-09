@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace FileManager.ActionPerformers
 {
     class MoveCursorUp : AbstractActionPerformerBehavior
     {
-        public override void Do(ActionPerformerArgs args)
+        public override void Do(ActionPerformerArgs actionPerformerArgs)
         {
-            args.PanelSet.FocusedListView.SelectedIndex--;
+            var listView = (AbstractListView<ListViewItem<FileSystemInfo>>)actionPerformerArgs.Sender;
+
+            if (listView.SelectedIndex != 0)
+                listView.SelectedIndex--;
         }
     }
 }

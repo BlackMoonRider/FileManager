@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FileManager.ActionPerformers;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace FileManager
         private PanelSet panelSet;
         private readonly ListView<FileSystemInfo> listView;
         private readonly DriveInfo[] driveInfos = DriveInfo.GetDrives();
+
+        public IActionPerformerBehavior ActionPerformer { get; private set; }
 
         public PopupList(int offsetX, int offsetY, int height, int width, PanelSet panelSet, string header)
         {
@@ -76,6 +79,13 @@ namespace FileManager
             Console.BackgroundColor = savedBackgroundColor;
 
             Extensions.RefreshScreen(panelSet);
+        }
+
+        public void Update(ConsoleKeyInfo key)
+        {
+            ActionPerformerArgs args = new ActionPerformerArgs(key, this);
+            ActionPerformer = ActionPerformer.GetActionPerformer(args);
+            ActionPerformer.Do(args);
         }
     }
 }

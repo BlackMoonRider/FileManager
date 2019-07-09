@@ -30,8 +30,6 @@ namespace FileManager
 
                 return focusedPanel;
             }
-
-
         }
 
         public IActionPerformerBehavior ActionPerformer { get; private set; }
@@ -84,9 +82,20 @@ namespace FileManager
 
         public void Update(ConsoleKeyInfo key)
         {
-            ActionPerformerArgs args = new ActionPerformerArgs(key, this);
-            ActionPerformer = ActionPerformer.GetActionPerformer(args);
-            ActionPerformer.Do(args);
+            switch (key.Key)
+            {
+                case ConsoleKey.UpArrow:
+                case ConsoleKey.DownArrow:
+                    FocusedPanel.Update(key);
+                    break;
+                default:
+                    ActionPerformerArgs args = new ActionPerformerArgs(key, this);
+                    ActionPerformer = ActionPerformer.GetActionPerformer(args);
+                    ActionPerformer.Do(args);
+                    break;
+            }
+
+            
         }
     }
 }

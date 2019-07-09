@@ -11,10 +11,12 @@ namespace FileManager.ActionPerformers
     {
         public override void Do(ActionPerformerArgs actionPerformerArgs)
         {
-            FileSystemInfo senderInfo = actionPerformerArgs.PanelSet.FocusedListView.SelectedItem.Item;
-            FileSystemInfo sourceInfo = actionPerformerArgs.PanelSet.CurrentItemToOperateOn.Item;
+            PanelSet panelSet = (PanelSet)actionPerformerArgs.Sender;
 
-            var action = actionPerformerArgs.PanelSet.CurrentAction;
+            FileSystemInfo senderInfo = panelSet.FocusedListView.SelectedItem.Item;
+            FileSystemInfo sourceInfo = panelSet.CurrentItemToOperateOn.Item;
+
+            var action = panelSet.CurrentAction;
 
             var source = sourceInfo.FullName;
             var destinationFile = Path.GetDirectoryName(senderInfo.FullName) + "\\" + Path.GetFileName(sourceInfo.FullName);
@@ -38,7 +40,7 @@ namespace FileManager.ActionPerformers
                     Directory.Move(source, destinationFolder);
             }
 
-            Extensions.RefreshScreen(actionPerformerArgs.PanelSet);
+            Extensions.RefreshScreen(panelSet);
         }
     }
 }
