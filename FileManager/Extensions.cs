@@ -79,9 +79,6 @@ namespace FileManager
             return $"{kbytes} TB";
         }
 
-        //public static void Clean<T>(this T list, List<int> columnWidths, int i, int offsetX, int offsetY) { }
-        //public static void Render<T>(this T list, List<int> columnWidths, int i, int offsetX, int offsetY) { }
-
         public static void RefreshScreen(PanelSet panelSet)
         {
             Console.Clear();
@@ -89,8 +86,21 @@ namespace FileManager
             foreach (var panel in panelSet.Panels)
             {
                 panel.Clean();
-                panel.Items = panelSet.GetItems(Path.GetDirectoryName(panel.SelectedItem.Item.FullName));
+                panel.Items = panelSet.GetItems(panel);
                 panel.Render();
+            }
+        }
+
+        public static void RefreshFocusedPanel(PanelSet panelSet)
+        {
+            foreach (var panel in panelSet.Panels)
+            {
+                if (panel.Focused)
+                {
+                    panel.Clean();
+                    panel.Items = panelSet.GetItems(panel);
+                    panel.Render();
+                }
             }
         }
     }

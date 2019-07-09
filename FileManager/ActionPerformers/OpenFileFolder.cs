@@ -12,14 +12,15 @@ namespace FileManager.ActionPerformers
     {
         public override void Do(ActionPerformerArgs actionPerformerArgs)
         {
-            ListView listView = actionPerformerArgs.PanelSet.FocusedListView;
+            ListView<FileSystemInfo> listView = actionPerformerArgs.PanelSet.FocusedListView;
             FileSystemInfo info = listView.SelectedItem.Item;
             if (info is FileInfo file)
                 Process.Start(file.FullName);
             else if (info is DirectoryInfo directoryInfo)
             {
                 listView.Clean();
-                listView.Items = actionPerformerArgs.PanelSet.GetItems(directoryInfo.FullName);
+                actionPerformerArgs.PanelSet.FocusedListView.Current = directoryInfo;
+                listView.Items = actionPerformerArgs.PanelSet.GetItems(actionPerformerArgs.PanelSet.FocusedPanel);
             }
         }
     }

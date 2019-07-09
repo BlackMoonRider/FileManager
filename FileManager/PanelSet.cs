@@ -11,29 +11,53 @@ namespace FileManager
 {
     class PanelSet
     {
-        public List<ListView> Panels { get; set; }
+        public List<ListView<FileSystemInfo>> Panels { get; set; }
         public ListViewItem<FileSystemInfo> CurrentItemToOperateOn { get; set; }
+        public ListView<FileSystemInfo> FocusedPanel
+        {
+            get
+            {
+                ListView<FileSystemInfo> focusedPanel = null;
+
+                foreach (var panel in Panels)
+                {
+                    if (panel.Focused)
+                    {
+                        focusedPanel = panel;
+                        break;
+                    }
+                }
+
+                return focusedPanel;
+            }
+
+
+        }
+
         public IActionPerformerBehavior ActionPerformer { get; private set; }
         public Actions CurrentAction;
 
         public PanelSet(int numberOfPanels)
         {
-            Panels = new List<ListView>();
+            Panels = new List<ListView<FileSystemInfo>>();
 
             for (int i = 0; i < numberOfPanels; i++)
             {
-                ListView listView = new ListView(10, 2, 20, i);
+                ListView<FileSystemInfo> listView = new ListView<FileSystemInfo>(10, 2, 20, i);
                 Panels.Add(listView);
-                listView.Items = GetItems("C:\\");
+                listView.Current = new DirectoryInfo("C:\\");
+                if (i == 0)
+                    Panels[i].Focused = true;
+                listView.Items = GetItems(Panels[i]);
                 ActionPerformer = new NoAction();
             }
 
-            Panels[0].Focused = true;
+            //Panels[0].Focused = true;
         }
 
-        public ListView FocusedListView => GetFocusedListView();
+        public ListView<FileSystemInfo> FocusedListView => GetFocusedListView();
 
-        public ListView GetFocusedListView()
+        public ListView<FileSystemInfo> GetFocusedListView()
         {
             foreach (var listView in Panels)
             {
@@ -43,9 +67,11 @@ namespace FileManager
             return null;
         }
 
-        public List<ListViewItem<FileSystemInfo>> GetItems(string path)
+        public List<ListViewItem<FileSystemInfo>> GetItems(ListView<FileSystemInfo> listView)
         {
-            return new DirectoryInfo(path)
+            var current = (DirectoryInfo)listView.Current;
+
+            return current
                 .GetFileSystemInfos()
                 .Select(
                 lvi => new ListViewItem<FileSystemInfo>(

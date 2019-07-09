@@ -53,6 +53,8 @@
     <Compile Include="ActionPerformers\IActionPerformerBehavior.cs" />
     <Compile Include="ActionPerformers\MoveCursorDown.cs" />
     <Compile Include="ActionPerformers\MoveCursorUp.cs" />
+    <Compile Include="ActionPerformers\NavigateToRoot.cs" />
+    <Compile Include="ActionPerformers\NavigateUpwards.cs" />
     <Compile Include="ActionPerformers\NoAction.cs" />
     <Compile Include="ActionPerformers\OpenFileFolder.cs" />
     <Compile Include="ActionPerformers\Paste.cs" />

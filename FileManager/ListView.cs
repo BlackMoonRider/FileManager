@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace FileManager
 {
-    class ListView : AbstractListView<ListViewItem<FileSystemInfo>>
+    class ListView<T> : AbstractListView<ListViewItem<T>>
     {
         public ListView(int offsetX, int offsetY, int height, int offsetXMultiplier) 
             : base(offsetX, offsetY, height, offsetXMultiplier)
         { }
+
+        public T Current { get; set; }
 
         override public void Clean()
         {

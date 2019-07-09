@@ -23,7 +23,7 @@ namespace FileManager
             {
                 var key = Console.ReadKey();
                 panelSet.Update(key);
-                foreach (ListView listView in panelSet.Panels)
+                foreach (ListView<FileSystemInfo> listView in panelSet.Panels)
                 {
                     listView.Render();
                 }

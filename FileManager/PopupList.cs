@@ -13,7 +13,7 @@ namespace FileManager
         private readonly string header;
         // private bool isRendered;
         private PanelSet panelSet;
-        private readonly ListView listView;
+        private readonly ListView<FileSystemInfo> listView;
         private readonly DriveInfo[] driveInfos = DriveInfo.GetDrives();
 
         public PopupList(int offsetX, int offsetY, int height, int width, PanelSet panelSet, string header)
@@ -27,9 +27,7 @@ namespace FileManager
             this.panelSet = panelSet;
             this.header = header;
 
-            listView = new ListView(offsetX, offsetX, height, 1);
-
-
+            listView = new ListView<FileSystemInfo>(offsetX, offsetX, height, 1);
         }
 
         public PopupList(PanelSet panelSet, string header)
@@ -42,6 +40,8 @@ namespace FileManager
 
             offsetX = Console.WindowWidth / 2 - width / 2;
             offsetY = Console.WindowHeight / 2 - height / 2;
+
+            listView = new ListView<FileSystemInfo>(offsetX, offsetX, height, 1);
         }
 
         public void Render()

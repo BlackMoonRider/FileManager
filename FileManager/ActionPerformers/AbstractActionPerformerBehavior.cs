@@ -15,7 +15,7 @@ namespace FileManager.ActionPerformers
         public IActionPerformerBehavior GetActionPerformer(ActionPerformerArgs actionPerformerArgs)
         {
             ConsoleKeyInfo key = actionPerformerArgs.Key;
-            ListView listView = actionPerformerArgs.PanelSet.FocusedListView;
+            ListView<FileSystemInfo> listView = actionPerformerArgs.PanelSet.FocusedListView;
 
             switch (key.Key)
             {
@@ -37,12 +37,12 @@ namespace FileManager.ActionPerformers
                     return new Cut();
                 case ConsoleKey.F4:
                     return new Paste();
-                //case ConsoleKey.F5:
-                //    return new NavigateToRoot();
+                case ConsoleKey.F5:
+                    return new NavigateToRoot();
                 case ConsoleKey.F6:
                     return new ShowProperties();
-                //case ConsoleKey.Backspace:
-                //    return new NavigateUpwards();
+                case ConsoleKey.Backspace:
+                    return new NavigateUpwards();
 #if DEBUG
                 case ConsoleKey.F12:
                     return new Test();
