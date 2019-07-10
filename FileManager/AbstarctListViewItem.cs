@@ -22,7 +22,8 @@ namespace FileManager
         public void Clean(List<int> columnWidths, int i, int offsetX, int offsetY)
         {
             Console.CursorLeft = offsetX;
-            Console.CursorTop = i + offsetY;
+            if (i + offsetY < Console.BufferHeight)
+                Console.CursorTop = i + offsetY;
             Console.Write(new string(' ', columnWidths.Sum()));
         }
     }

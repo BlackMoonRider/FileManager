@@ -14,13 +14,12 @@ namespace FileManager
         {
             Console.CursorVisible = false;
             Console.WindowHeight = 50;
+            Console.BufferHeight = Console.WindowHeight;
+            Console.BufferWidth = Console.BufferWidth;
 
             PanelSet panelSet = new PanelSet(2);
-            PopupSticker legend = new PopupSticker(1, Console.WindowWidth, panelSet, String.Empty,
-                " F1 Copy | F2 Rename | F3 Cut | F4 Paste | F5 Root | F6 Properties | F8 Drive ");
 
             Extensions.RefreshScreen(panelSet);
-            legend.Render();
 
             while (true)
             {

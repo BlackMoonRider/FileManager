@@ -24,7 +24,8 @@ namespace FileManager
             for (int i = 0; i < Items.Count; i++)
             {
                 Console.CursorLeft = offsetX;
-                Console.CursorTop = i + offsetY;
+                if (i + offsetY < Console.BufferHeight)
+                    Console.CursorTop = i + offsetY;
                 Items[i].Clean(ColumnWidths, i, offsetX, offsetY);
             }
         }

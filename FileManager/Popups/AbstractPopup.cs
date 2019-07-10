@@ -29,6 +29,21 @@ namespace FileManager
             offsetY = Console.WindowHeight / 2 - height / 2;
         }
 
+        public AbstractPopup(int height, int width, int offsetX, int offsetY, string header,
+            ConsoleColor newForegroundColor = ConsoleColor.DarkMagenta,
+            ConsoleColor newBackgroundColor = ConsoleColor.DarkCyan)
+        {
+
+            this.height = height;
+            this.width = width;
+            this.header = header;
+            this.newForegroundColor = newForegroundColor;
+            this.newBackgroundColor = newBackgroundColor;
+
+            this.offsetX = offsetX;
+            this.offsetY = offsetY;
+        }
+
         public AbstractPopup(string header,
             ConsoleColor newForegroundColor = ConsoleColor.DarkMagenta,
             ConsoleColor newBackgroundColor = ConsoleColor.DarkCyan)

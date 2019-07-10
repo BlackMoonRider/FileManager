@@ -83,12 +83,17 @@ namespace FileManager
         {
             Console.Clear();
 
+            PopupSticker legend = new PopupSticker(1, Console.WindowWidth, 0, 47, panelSet, String.Empty,
+                " F1 Copy | F2 Rename | F3 Cut | F4 Paste | F5 Root | F6 Properties | F8 Drive ");
+
             foreach (var panel in panelSet.Panels)
             {
                 panel.Clean();
                 panel.Items = panelSet.GetItems(panel);
                 panel.Render();
             }
+
+            legend.Render();
         }
 
         public static void RefreshFocusedPanel(PanelSet panelSet)

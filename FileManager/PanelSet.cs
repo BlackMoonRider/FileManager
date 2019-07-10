@@ -42,7 +42,7 @@ namespace FileManager
 
             for (int i = 0; i < numberOfPanels; i++)
             {
-                ListView<FileSystemInfo> listView = new ListView<FileSystemInfo>(10, 2, 20, i);
+                ListView<FileSystemInfo> listView = new ListView<FileSystemInfo>(10, 2, 43, i);
                 Panels.Add(listView);
                 listView.Current = new DirectoryInfo("C:\\");
                 if (i == 0)
