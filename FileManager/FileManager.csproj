@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="AbstarctListViewItem.cs" />
     <Compile Include="AbstractListView.cs" />
+    <Compile Include="ActionPerformers\CreateNewFolder.cs" />
     <Compile Include="Popups\AbstractPopup.cs" />
     <Compile Include="ActionPerformers\AbstarctListViewItem.cs" />
     <Compile Include="ActionPerformers\AbstractActionPerformerBehavior.cs" />

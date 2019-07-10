@@ -40,6 +40,8 @@ namespace FileManager.ActionPerformers
                     return new NavigateToRoot();
                 case ConsoleKey.F6:
                     return new ShowProperties();
+                case ConsoleKey.F7:
+                    return new CreateNewFolder();
                 case ConsoleKey.F8:
                     return new SelectDrive();
                 case ConsoleKey.Backspace:

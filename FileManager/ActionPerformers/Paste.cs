@@ -13,31 +13,31 @@ namespace FileManager.ActionPerformers
         {
             PanelSet panelSet = (PanelSet)actionPerformerArgs.Sender;
 
-            FileSystemInfo senderInfo = panelSet.FocusedListView.SelectedItem.Item;
+            FileSystemInfo senderInfo = panelSet.FocusedListView.Current;
             FileSystemInfo sourceInfo = panelSet.CurrentItemToOperateOn.Item;
 
             var action = panelSet.CurrentAction;
 
             var source = sourceInfo.FullName;
-            var destinationFile = Path.GetDirectoryName(senderInfo.FullName) + "\\" + Path.GetFileName(sourceInfo.FullName);
-            var destinationFolder = Path.GetDirectoryName(senderInfo.FullName) + "\\" + sourceInfo.Name;
+            
+            var destination = senderInfo.FullName + "\\" + sourceInfo.Name;
 
             if (sourceInfo is FileInfo file)
             {
                 if (action == Actions.Copy)
-                    File.Copy(source, destinationFile);
+                    File.Copy(source, destination);
 
                 else if (action == Actions.Cut)
-                    File.Move(source, destinationFile);
+                    File.Move(source, destination);
             }
 
             else if (sourceInfo is DirectoryInfo directoryInfo)
             {
                 if (action == Actions.Copy)
-                    Extensions.DirectoryCopy(source, destinationFolder);
+                    Extensions.DirectoryCopy(source, destination);
 
                 else if (action == Actions.Cut)
-                    Directory.Move(source, destinationFolder);
+                    Directory.Move(source, destination);
             }
 
             Extensions.RefreshScreen(panelSet);
