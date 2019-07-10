@@ -13,7 +13,11 @@ namespace FileManager.ActionPerformers
         {
             PanelSet panelSet = (PanelSet)actionPerformerArgs.Sender;
 
-            var currentPath = panelSet.FocusedListView.Current.FullName + "\\New Folder";
+            PopupInput popupInput = new PopupInput(panelSet);
+            popupInput.Render();
+            string newName = popupInput.UserInputResult;
+
+            var currentPath = panelSet.FocusedListView.Current.FullName + "\\" + newName;
 
             Directory.CreateDirectory(currentPath);
 
