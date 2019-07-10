@@ -26,7 +26,7 @@ namespace FileManager
         {
             ListView = new ListView<DirectoryInfo>(offsetX, offsetY, height, 0);
             ListView.Focused = true;
-            ListView.ColumnWidths = new List<int>() { 6, 14, 10 };
+            ListView.ColumnWidths = new List<int>() { 7, width - 17, 10 };
             ListView.Items = DriveInfo.GetDrives()
                 .Where(d => d.IsReady)
                 .Select(d => new ListViewItem<DirectoryInfo>(d.RootDirectory, d.RootDirectory.FullName, d.VolumeLabel, Extensions.NormalizeSize(d.TotalSize)))
@@ -38,6 +38,8 @@ namespace FileManager
         public override void Render()
         {
             base.Render();
+
+            ListView.SetOffsetY(offsetY);
 
             ListView.Render();
 

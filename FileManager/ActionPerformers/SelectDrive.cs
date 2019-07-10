@@ -10,7 +10,7 @@ namespace FileManager.ActionPerformers
     {
         public override void Do(ActionPerformerArgs actionPerformerArgs)
         {
-            PopupList popupList = new PopupList("Test");
+            PopupList popupList = new PopupList("Select drive:");
             ((PanelSet)actionPerformerArgs.Sender).Modal = popupList;
             popupList.Render();
         }

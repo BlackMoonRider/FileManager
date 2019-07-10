@@ -11,7 +11,8 @@ namespace FileManager
     {
         public List<int> ColumnWidths { get; set; }
         public List<T> Items { get; set; }
-        protected readonly int offsetX, offsetY, height;
+        protected int offsetX, offsetY;
+        protected readonly int height;
         protected bool isRendered;
         protected int scroll;
         protected int selectedIndex;
@@ -29,10 +30,9 @@ namespace FileManager
             }
         }
 
-        public T SelectedItem => Items[SelectedIndex]; // TODO: Fix copying to an empty folder
+        public T SelectedItem => Items[SelectedIndex];
 
         public bool Focused { get; set; }
-        //public object ActionPerformer { get; private set; }
 
         public AbstractListView(int offsetX, int offsetY, int height, int offsetXMultiplier)
         {
@@ -66,6 +66,11 @@ namespace FileManager
             ActionPerformerArgs args = new ActionPerformerArgs(key, this);
             ActionPerformer = ActionPerformer.GetActionPerformer(args);
             ActionPerformer.Do(args);
+        }
+
+        public void SetOffsetY(int offsetY)
+        {
+            this.offsetY = offsetY;
         }
     }
 }
