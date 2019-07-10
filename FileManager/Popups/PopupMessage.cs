@@ -22,7 +22,6 @@ namespace FileManager
 
         public PopupMessage(string message, string header = "Info") : base(header)
         {
-            this.panelSet = panelSet;
             this.message = message;
         }
 

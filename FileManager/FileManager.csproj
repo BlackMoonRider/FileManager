@@ -71,6 +71,7 @@
     <Compile Include="Popups\PopupInput.cs" />
     <Compile Include="Popups\PopupList.cs" />
     <Compile Include="Popups\PopupMessage.cs" />
+    <Compile Include="Popups\PopupSticker.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -22,6 +22,8 @@ namespace FileManager
             this.height = height;
             this.width = width;
             this.header = header;
+            this.newForegroundColor = newForegroundColor;
+            this.newBackgroundColor = newBackgroundColor;
 
             offsetX = Console.WindowWidth / 2 - width / 2;
             offsetY = Console.WindowHeight / 2 - height / 2;
@@ -32,6 +34,8 @@ namespace FileManager
             ConsoleColor newBackgroundColor = ConsoleColor.DarkCyan)
         {
             this.header = header;
+            this.newForegroundColor = newForegroundColor;
+            this.newBackgroundColor = newBackgroundColor;
 
             width = 30;
             height = 10;
@@ -46,8 +50,8 @@ namespace FileManager
 
             SaveBackgroundColors();
 
-            Console.ForegroundColor = ConsoleColor.DarkMagenta;
-            Console.BackgroundColor = ConsoleColor.DarkCyan;
+            Console.ForegroundColor = newForegroundColor;
+            Console.BackgroundColor = newBackgroundColor;
 
             for (int i = 0; i < height; i++)
             {
