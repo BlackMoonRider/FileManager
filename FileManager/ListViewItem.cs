@@ -17,7 +17,7 @@ namespace FileManager
             {
                 Console.CursorLeft = listViewX + columnsWidth.Take(i).Sum();
                 Console.CursorTop = elementIndex + listViewY;
-                Console.Write(Extensions.NormalizeString(columns[i], columnsWidth[i]));
+                Console.Write(Extensions.NormalizeStringLength(columns[i], columnsWidth[i]));
             }
         }
     }

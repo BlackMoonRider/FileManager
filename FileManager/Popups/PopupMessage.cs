@@ -35,7 +35,7 @@ namespace FileManager
             {
                 Console.CursorTop = offsetY + i;
                 Console.CursorLeft = offsetX;
-                Console.WriteLine(lines[i]);
+                Console.WriteLine(lines[i].NormalizeStringLength(width - 1));
             }
 
             Console.ReadKey();

@@ -13,7 +13,7 @@ namespace FileManager.ActionPerformers
         {
             PanelSet panelSet = (PanelSet)actionPerformerArgs.Sender;
 
-            PopupInput popupInput = new PopupInput(panelSet);
+            PopupInput popupInput = new PopupInput(panelSet, "Enter new folder name:");
             popupInput.Render();
             string newName = popupInput.UserInputResult;
 

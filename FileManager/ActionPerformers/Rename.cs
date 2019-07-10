@@ -16,7 +16,7 @@ namespace FileManager.ActionPerformers
             FileSystemInfo senderInfo = panelSet.FocusedListView.SelectedItem.Item;
             var source = senderInfo.FullName;
 
-            PopupInput popupInput = new PopupInput(panelSet);
+            PopupInput popupInput = new PopupInput(panelSet, "Enter new name:");
             popupInput.Render();
             string newName = popupInput.UserInputResult;
 

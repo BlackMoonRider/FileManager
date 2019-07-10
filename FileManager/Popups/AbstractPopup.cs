@@ -78,7 +78,7 @@ namespace FileManager
             offsetX++;
             Console.CursorTop = offsetY;
             Console.CursorLeft = offsetX;
-            Console.WriteLine(header.NormalizeString(width - 1));
+            Console.WriteLine(header.NormalizeStringLength(width - 1));
 
             offsetY += 2;
         }

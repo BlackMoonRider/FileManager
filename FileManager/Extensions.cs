@@ -79,7 +79,7 @@ namespace FileManager
             return $"{kbytes} TB";
         }
 
-        public static string NormalizeString(this string inputString, int maxLength)
+        public static string NormalizeStringLength(this string inputString, int maxLength)
         {
             string[] inputLines = inputString.Split(new string[] { "\r\n" }, StringSplitOptions.None);
 
@@ -90,16 +90,16 @@ namespace FileManager
                 if (inputLines[i].Length < maxLength)
                 {
                     if (i == inputLines.Length - 1)
-                        stringBuilder.Append(inputLines[i].PadRight(maxLength, ' '));
+                        stringBuilder.Append(inputLines[i].Trim().PadRight(maxLength, ' '));
                     else
-                        stringBuilder.AppendLine(inputLines[i].PadRight(maxLength, ' '));
+                        stringBuilder.AppendLine(inputLines[i].Trim().PadRight(maxLength, ' '));
                 }
                 else
                 {
                     if (i == inputLines.Length - 1)
-                        stringBuilder.Append(inputLines[i].Substring(0, maxLength - 4) + "... ");
+                        stringBuilder.Append(inputLines[i].Trim().Substring(0, maxLength - 4) + "... ");
                     else
-                        stringBuilder.AppendLine(inputLines[i].Substring(0, maxLength - 4) + "... ");
+                        stringBuilder.AppendLine(inputLines[i].Trim().Substring(0, maxLength - 4) + "... ");
 
                 }
             }

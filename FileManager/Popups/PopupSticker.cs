@@ -33,6 +33,18 @@ namespace FileManager
         {
             base.Render();
 
+            if (!String.IsNullOrWhiteSpace(message))
+            {
+                var lines = message.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    Console.CursorTop = offsetY + i;
+                    Console.CursorLeft = offsetX;
+                    Console.WriteLine(lines[i].NormalizeStringLength(width - 1));
+                }
+            }
+
             RestoreBackgroundColors();
         }
     }

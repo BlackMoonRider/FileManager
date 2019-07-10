@@ -9,12 +9,14 @@ namespace FileManager
     class PopupInput : AbstractPopup
     {
         private PanelSet panelSet;
+        private string message;
 
         public string UserInputResult { get; private set; }
 
-        public PopupInput(PanelSet panelSet, string header = "Input") : base(header)
+        public PopupInput(PanelSet panelSet, string message, string header = "Input") : base(header)
         {
             this.panelSet = panelSet;
+            this.message = message;
         }
 
         public override void Render()
@@ -27,7 +29,7 @@ namespace FileManager
             {
                 Console.CursorTop = offsetY + 1;
                 Console.CursorLeft = offsetX + 1;
-                Console.WriteLine("Enter new name:");
+                Console.WriteLine(message.NormalizeStringLength(width - 2));
 
                 Console.CursorTop = offsetY + 3;
                 Console.CursorLeft = offsetX + 1;
