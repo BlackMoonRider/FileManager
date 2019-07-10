@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,13 +15,12 @@ namespace FileManager.ActionPerformers
         public IActionPerformerBehavior GetActionPerformer(ActionPerformerArgs actionPerformerArgs)
         {
             ConsoleKeyInfo key = actionPerformerArgs.Key;
-            ListView listView = actionPerformerArgs.PanelSet.FocusedListView;
 
             switch (key.Key)
             {
-                case ConsoleKey.UpArrow when listView.SelectedIndex != 0:
+                case ConsoleKey.UpArrow:
                     return new MoveCursorUp();
-                case ConsoleKey.DownArrow when listView.SelectedIndex < listView.Items.Count - 1:
+                case ConsoleKey.DownArrow:
                     return new MoveCursorDown();
                 case ConsoleKey.Enter:
                     return new OpenFileFolder();
@@ -31,9 +31,25 @@ namespace FileManager.ActionPerformers
                 case ConsoleKey.F1:
                     return new Copy();
                 case ConsoleKey.F2:
-                    return new Cut();
+                    return new Rename();
                 case ConsoleKey.F3:
+                    return new Cut();
+                case ConsoleKey.F4:
                     return new Paste();
+                case ConsoleKey.F5:
+                    return new NavigateToRoot();
+                case ConsoleKey.F6:
+                    return new ShowProperties();
+                case ConsoleKey.F7:
+                    return new CreateNewFolder();
+                case ConsoleKey.F8:
+                    return new SelectDrive();
+                case ConsoleKey.Backspace:
+                    return new NavigateUpwards();
+#if DEBUG
+                case ConsoleKey.F12:
+                    return new Test();
+#endif
                 default:
                     return new NoAction();
             }

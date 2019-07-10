@@ -13,19 +13,29 @@ namespace FileManager
         static void Main(string[] args)
         {
             Console.CursorVisible = false;
+            Console.WindowHeight = 50;
+            Console.BufferHeight = Console.WindowHeight;
+            Console.BufferWidth = Console.BufferWidth;
 
             PanelSet panelSet = new PanelSet(2);
 
-            foreach (ListView listView in panelSet.Panels)
-            {
-                listView.Render();
-            }
+            Extensions.RefreshScreen(panelSet);
 
             while (true)
             {
                 var key = Console.ReadKey();
-                panelSet.Update(key);
-                foreach (ListView listView in panelSet.Panels)
+                try
+                {
+                    panelSet.Update(key);
+                }
+                catch (Exception ex)
+                {
+                    var exception = ex;
+                    var popup = new PopupMessage(panelSet, "This operation cannot be performed.", "Error"); // TODO: Impelement saving of the current path (to avoid the "Access denied" error)
+                    popup.Render();
+                }
+                
+                foreach (ListView<FileSystemInfo> listView in panelSet.Panels)
                 {
                     listView.Render();
                 }

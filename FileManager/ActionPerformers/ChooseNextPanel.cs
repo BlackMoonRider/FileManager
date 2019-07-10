@@ -10,7 +10,9 @@ namespace FileManager.ActionPerformers
     {
         public override void Do(ActionPerformerArgs actionPerformerArgs)
         {
-            var panels = actionPerformerArgs.PanelSet.Panels;
+            PanelSet panelSet = (PanelSet)actionPerformerArgs.Sender;
+
+            var panels = panelSet.Panels;
 
             for (int i = 0; i < panels.Count; i++)
             {

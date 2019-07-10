@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace FileManager.ActionPerformers
 {
-    class Copy : AbstractActionPerformerBehavior
+    class SelectDrive : AbstractActionPerformerBehavior
     {
         public override void Do(ActionPerformerArgs actionPerformerArgs)
         {
-            PanelSet panelSet = (PanelSet)actionPerformerArgs.Sender;
-
-            panelSet.CurrentItemToOperateOn = panelSet.FocusedListView.SelectedItem;
-            panelSet.CurrentAction = Actions.Copy;
+            PopupList popupList = new PopupList("Select drive:");
+            ((PanelSet)actionPerformerArgs.Sender).Modal = popupList;
+            popupList.Render();
         }
     }
 }

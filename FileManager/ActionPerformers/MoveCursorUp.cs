@@ -3,14 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace FileManager.ActionPerformers
 {
     class MoveCursorUp : AbstractActionPerformerBehavior
     {
-        public override void Do(ActionPerformerArgs args)
+        public override void Do(ActionPerformerArgs actionPerformerArgs)
         {
-            args.PanelSet.FocusedListView.SelectedIndex--;
+            dynamic listView = actionPerformerArgs.Sender as AbstractListView<ListViewItem<FileSystemInfo>>;
+
+            if (listView == null)
+                listView = actionPerformerArgs.Sender as AbstractListView<ListViewItem<DirectoryInfo>>;
+
+            if (listView.SelectedIndex != 0)
+                listView.SelectedIndex--;
         }
     }
 }

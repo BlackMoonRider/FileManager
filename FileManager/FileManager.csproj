@@ -42,6 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstarctListViewItem.cs" />
+    <Compile Include="AbstractListView.cs" />
+    <Compile Include="ActionPerformers\CreateNewFolder.cs" />
+    <Compile Include="Popups\AbstractPopup.cs" />
+    <Compile Include="ActionPerformers\AbstarctListViewItem.cs" />
     <Compile Include="ActionPerformers\AbstractActionPerformerBehavior.cs" />
     <Compile Include="ActionPerformers\ActionPerformerArgs.cs" />
     <Compile Include="ActionPerformers\ChooseNextPanel.cs" />
@@ -51,13 +56,23 @@
     <Compile Include="ActionPerformers\IActionPerformerBehavior.cs" />
     <Compile Include="ActionPerformers\MoveCursorDown.cs" />
     <Compile Include="ActionPerformers\MoveCursorUp.cs" />
+    <Compile Include="ActionPerformers\NavigateToRoot.cs" />
+    <Compile Include="ActionPerformers\NavigateUpwards.cs" />
     <Compile Include="ActionPerformers\NoAction.cs" />
     <Compile Include="ActionPerformers\OpenFileFolder.cs" />
     <Compile Include="ActionPerformers\Paste.cs" />
+    <Compile Include="ActionPerformers\Rename.cs" />
+    <Compile Include="ActionPerformers\SelectDrive.cs" />
+    <Compile Include="ActionPerformers\ShowProperties.cs" />
+    <Compile Include="ActionPerformers\Test.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="ListView.cs" />
     <Compile Include="ListViewItem.cs" />
     <Compile Include="PanelSet.cs" />
+    <Compile Include="Popups\PopupInput.cs" />
+    <Compile Include="Popups\PopupList.cs" />
+    <Compile Include="Popups\PopupMessage.cs" />
+    <Compile Include="Popups\PopupSticker.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

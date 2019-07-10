@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace FileManager.ActionPerformers
 {
-    class Copy : AbstractActionPerformerBehavior
+    class Test : AbstractActionPerformerBehavior
     {
         public override void Do(ActionPerformerArgs actionPerformerArgs)
         {
-            PanelSet panelSet = (PanelSet)actionPerformerArgs.Sender;
-
-            panelSet.CurrentItemToOperateOn = panelSet.FocusedListView.SelectedItem;
-            panelSet.CurrentAction = Actions.Copy;
+            PopupList popupList = new PopupList("Test");
+            ((PanelSet)actionPerformerArgs.Sender).Modal = popupList;
+            popupList.Render();
+            //popupList.Update(actionPerformerArgs.Key);
         }
     }
 }

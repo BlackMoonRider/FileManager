@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FileManager
 {
-    public static class Extensions
+    static class Extensions
     {
         public static void DirectoryCopy(string sourceName, string destinationName, bool copySubDirs = true)
         {
@@ -42,6 +42,117 @@ namespace FileManager
                     DirectoryCopy(subdir.FullName, tempPath, copySubDirs);
                 }
             }
+        }
+
+        public static ulong DirectorySize(this DirectoryInfo directoryInfo)
+        {
+            ulong size = 0;
+            FileInfo[] fileInfos = directoryInfo.GetFiles();
+
+            foreach (FileInfo file in fileInfos)
+                size += (ulong)file.Length;
+
+            DirectoryInfo[] directoryInfos = directoryInfo.GetDirectories();
+
+            foreach (DirectoryInfo directory in directoryInfos)
+                size += DirectorySize(directory);
+
+            return size;
+        }
+
+        public static string NormalizeSize(this long bytes) => NormalizeSize((ulong)bytes);
+        public static string NormalizeSize(this int bytes) => NormalizeSize((ulong)bytes);
+
+        public static string NormalizeSize(this ulong bytes)
+        {
+            if (bytes < 1024)
+                return $"{bytes} Byte";
+
+            ulong kbytes = bytes / 1024;
+
+            if (kbytes < 1024)
+                return $"{kbytes} KB";
+
+            ulong mbytes = kbytes / 1024;
+
+            if (mbytes < 1024)
+                return $"{mbytes} MB";
+
+            ulong gbytes = mbytes / 1024;
+
+            if (gbytes < 1024)
+                return $"{gbytes} GB";
+
+            ulong tbytes = gbytes / 1024;
+
+            return $"{kbytes} TB";
+        }
+
+        public static string NormalizeStringLength(this string inputString, int maxLength)
+        {
+            string[] inputLines = inputString.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+
+            StringBuilder stringBuilder = new StringBuilder();
+
+            for (int i = 0; i < inputLines.Length; i++)
+            {
+                if (inputLines[i].Length < maxLength)
+                {
+                    if (i == inputLines.Length - 1)
+                        stringBuilder.Append(inputLines[i].Trim().PadRight(maxLength, ' '));
+                    else
+                        stringBuilder.AppendLine(inputLines[i].Trim().PadRight(maxLength, ' '));
+                }
+                else
+                {
+                    if (i == inputLines.Length - 1)
+                        stringBuilder.Append(inputLines[i].Trim().Substring(0, maxLength - 4) + "... ");
+                    else
+                        stringBuilder.AppendLine(inputLines[i].Trim().Substring(0, maxLength - 4) + "... ");
+
+                }
+            }
+
+            var tmp = stringBuilder.ToString();
+
+            return stringBuilder.ToString();
+        }
+
+        public static void RefreshScreen(PanelSet panelSet)
+        {
+            Console.Clear();
+
+            foreach (var panel in panelSet.Panels)
+            {
+                panel.Clean();
+                panel.Items = panelSet.GetItems(panel);
+                panel.Render();
+            }
+
+            RenderLegend(panelSet);
+        }
+
+        public static void RefreshFocusedPanel(PanelSet panelSet)
+        {
+            foreach (var panel in panelSet.Panels)
+            {
+                if (panel.Focused)
+                {
+                    panel.Clean();
+                    panel.Items = panelSet.GetItems(panel);
+                    panel.Render();
+                }
+            }
+
+            RenderLegend(panelSet);
+        }
+
+        private static void RenderLegend(PanelSet panelSet)
+        {
+            PopupSticker legend = new PopupSticker(1, Console.WindowWidth, 0, 47, panelSet, String.Empty,
+                " F1 Copy | F2 Rename | F3 Cut | F4 Paste | F5 Root | F6 Properties | F7 New Folder | F8 Drives ");
+
+            legend.Render();
         }
     }
 }

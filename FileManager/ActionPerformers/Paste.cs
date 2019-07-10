@@ -11,41 +11,36 @@ namespace FileManager.ActionPerformers
     {
         public override void Do(ActionPerformerArgs actionPerformerArgs)
         {
-            FileSystemInfo senderInfo = actionPerformerArgs.PanelSet.FocusedListView.SelectedItem.State;
-            FileSystemInfo sourceInfo = actionPerformerArgs.PanelSet.CurrentItemToOperateOn.State;
+            PanelSet panelSet = (PanelSet)actionPerformerArgs.Sender;
 
-            var action = actionPerformerArgs.PanelSet.CurrentAction;
+            FileSystemInfo senderInfo = panelSet.FocusedListView.Current;
+            FileSystemInfo sourceInfo = panelSet.CurrentItemToOperateOn.Item;
 
-            var fileToCopy = sourceInfo.FullName;
-            var fileToPaste = Path.GetDirectoryName(senderInfo.FullName) + "\\" + Path.GetFileName(sourceInfo.FullName);
+            var action = panelSet.CurrentAction;
 
-            var folderToCopy = sourceInfo.FullName;
-            var folderToPaste = Path.GetDirectoryName(senderInfo.FullName) + "\\" + sourceInfo.Name;
+            var source = sourceInfo.FullName;
+            
+            var destination = senderInfo.FullName + "\\" + sourceInfo.Name;
 
             if (sourceInfo is FileInfo file)
             {
                 if (action == Actions.Copy)
-                    File.Copy(fileToCopy, fileToPaste);
+                    File.Copy(source, destination);
 
                 else if (action == Actions.Cut)
-                    File.Move(fileToCopy, fileToPaste);
+                    File.Move(source, destination);
             }
 
             else if (sourceInfo is DirectoryInfo directoryInfo)
             {
                 if (action == Actions.Copy)
-                    Extensions.DirectoryCopy(folderToCopy, folderToPaste);
+                    Extensions.DirectoryCopy(source, destination);
 
                 else if (action == Actions.Cut)
-                    Directory.Move(folderToCopy, folderToPaste);
+                    Directory.Move(source, destination);
             }
 
-            foreach (var panel in actionPerformerArgs.PanelSet.Panels)
-            {
-                panel.Clean();
-                panel.Items = actionPerformerArgs.PanelSet.GetItems(Path.GetDirectoryName(panel.SelectedItem.State.FullName));
-                panel.Render();
-            }
+            Extensions.RefreshScreen(panelSet);
         }
     }
 }

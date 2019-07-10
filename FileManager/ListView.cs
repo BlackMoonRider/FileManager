@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FileManager.ActionPerformers;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,42 +8,15 @@ using System.Threading.Tasks;
 
 namespace FileManager
 {
-    class ListView
+    class ListView<T> : AbstractListView<ListViewItem<T>>
     {
-        public List<int> ColumnWidths { get; set; }
-        public List<ListViewItem> Items { get; set; }
-        private readonly int offsetX, offsetY, height;
-        private bool isRendered;
-        private int scroll;
-        private int selectedIndex;
-        private int previouslySelectedIndex;
+        public ListView(int offsetX, int offsetY, int height, int offsetXMultiplier) 
+            : base(offsetX, offsetY, height, offsetXMultiplier)
+        { }
 
-        public int SelectedIndex
-        {
-            get => selectedIndex;
-            set
-            {
-                previouslySelectedIndex = selectedIndex;
-                selectedIndex = value;
-            }
-        }
+        public T Current { get; set; }
 
-        public ListViewItem SelectedItem => Items[SelectedIndex];
-
-        public bool Focused { get; set; }
-
-        public ListView(int offsetX, int offsetY, int height, int offsetXMultiplier)
-        {
-            ColumnWidths = new List<int> { 32, 10, 10 };
-
-            this.offsetX = offsetX + offsetXMultiplier * ColumnWidths.Sum() + 
-                (offsetXMultiplier > 0 ? 2 : 0);
-            this.offsetY = offsetY;
-
-            this.height = height; 
-        }
-
-        public void Clean()
+        override public void Clean()
         {
             scroll = 0;
             selectedIndex = previouslySelectedIndex = 0;
@@ -50,23 +24,15 @@ namespace FileManager
             for (int i = 0; i < Items.Count; i++)
             {
                 Console.CursorLeft = offsetX;
-                Console.CursorTop = i + offsetY;
+                if (i + offsetY < Console.BufferHeight)
+                    Console.CursorTop = i + offsetY;
                 Items[i].Clean(ColumnWidths, i, offsetX, offsetY);
             }
         }
 
-        public void Render()
+        override public void Render()
         {
-            if (selectedIndex > height + scroll - 1)
-            {
-                scroll++;
-                isRendered = false;
-            }
-            else if (selectedIndex < scroll)
-            {
-                scroll--;
-                isRendered = false;
-            }
+            base.Render();
 
             for (int i = 0; i < Math.Min(height, Items.Count); i++)
             {
@@ -81,7 +47,7 @@ namespace FileManager
                 if (elementIndex == selectedIndex)
                 {
                     Console.ForegroundColor = ConsoleColor.Black;
-                    Console.BackgroundColor = ConsoleColor.White;
+                    Console.BackgroundColor = Focused ? ConsoleColor.White : ConsoleColor.DarkGray;
                 }
                 Console.CursorLeft = offsetX;
                 Console.CursorTop = i + offsetY;
@@ -92,5 +58,6 @@ namespace FileManager
             }
             isRendered = true;
         }
+
     }
 }

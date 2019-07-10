@@ -10,7 +10,7 @@ namespace FileManager.ActionPerformers
     {
         public override void Do(ActionPerformerArgs actionPerformerArgs)
         {
-            var panelSet = actionPerformerArgs.PanelSet;
+            PanelSet panelSet = (PanelSet)actionPerformerArgs.Sender;
 
             panelSet.CurrentItemToOperateOn = panelSet.FocusedListView.SelectedItem;
             panelSet.CurrentAction = Actions.Cut;
