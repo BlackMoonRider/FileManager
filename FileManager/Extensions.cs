@@ -46,9 +46,18 @@ namespace FileManager
 
         public static ulong DirectorySize(this DirectoryInfo directoryInfo)
         {
-            dynamic fileSystemObject = Activator.CreateInstance(Type.GetTypeFromProgID("Scripting.FileSystemObject"));
-            dynamic folder = fileSystemObject.GetFolder(directoryInfo.FullName);
-            return (ulong)folder.size;
+            ulong size = 0;
+            FileInfo[] fileInfos = directoryInfo.GetFiles();
+
+            foreach (FileInfo f in fileInfos)
+                size += (ulong)f.Length;
+
+            DirectoryInfo[] directoryInfos = directoryInfo.GetDirectories();
+
+            foreach (DirectoryInfo d in directoryInfos)
+                size += DirectorySize(d);
+
+            return size;
         }
 
         public static string NormalizeSize(this long bytes) => NormalizeSize((ulong)bytes);
@@ -113,9 +122,6 @@ namespace FileManager
         {
             Console.Clear();
 
-            PopupSticker legend = new PopupSticker(1, Console.WindowWidth, 0, 47, panelSet, String.Empty,
-                " F1 Copy | F2 Rename | F3 Cut | F4 Paste | F5 Root | F6 Properties | F7 New Folder | F8 Drives ");
-
             foreach (var panel in panelSet.Panels)
             {
                 panel.Clean();
@@ -123,7 +129,7 @@ namespace FileManager
                 panel.Render();
             }
 
-            legend.Render();
+            RenderLegend(panelSet);
         }
 
         public static void RefreshFocusedPanel(PanelSet panelSet)
@@ -137,6 +143,16 @@ namespace FileManager
                     panel.Render();
                 }
             }
+
+            RenderLegend(panelSet);
+        }
+
+        private static void RenderLegend(PanelSet panelSet)
+        {
+            PopupSticker legend = new PopupSticker(1, Console.WindowWidth, 0, 47, panelSet, String.Empty,
+                " F1 Copy | F2 Rename | F3 Cut | F4 Paste | F5 Root | F6 Properties | F7 New Folder | F8 Drives ");
+
+            legend.Render();
         }
     }
 }
