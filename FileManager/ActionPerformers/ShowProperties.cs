@@ -24,7 +24,7 @@ namespace FileManager.ActionPerformers
                 stringBuilder.AppendLine("Name:\t\t" + sourceInfo.Name);
                 stringBuilder.AppendLine("Parent direcotry:\t" + Path.GetDirectoryName(sourceInfo.FullName));
                 stringBuilder.AppendLine("Root direcotry:\t" + Path.GetPathRoot(sourceInfo.FullName));
-                stringBuilder.AppendLine("Read-only:\t" + ((readOnly == 1) ? "true" : "false"));
+                stringBuilder.AppendLine("Read-only:\t\t" + ((readOnly == 1) ? "true" : "false"));
                 stringBuilder.AppendLine("Last read time:\t" + sourceInfo.LastAccessTime);
                 stringBuilder.AppendLine("Last write time:\t" + sourceInfo.LastWriteTime);
                 stringBuilder.AppendLine("Size:\t\t" + fileInfo.Length.NormalizeSize());
@@ -37,7 +37,7 @@ namespace FileManager.ActionPerformers
                 stringBuilder.AppendLine("Name:\t\t" + sourceInfo.Name);
                 stringBuilder.AppendLine("Parent direcotry:\t" + Path.GetDirectoryName(sourceInfo.FullName));
                 stringBuilder.AppendLine("Root direcotry:\t" + Path.GetPathRoot(sourceInfo.FullName));
-                stringBuilder.AppendLine("Read-only:\t" + ((readOnly == 1) ? "true" : "false"));
+                stringBuilder.AppendLine("Read-only:\t\t" + ((readOnly == 1) ? "true" : "false"));
                 stringBuilder.AppendLine("Last read time:\t" + sourceInfo.LastAccessTime);
                 stringBuilder.AppendLine("Last write time:\t" + sourceInfo.LastWriteTime);
                 stringBuilder.AppendLine("Size:\t\t" + directoryInfo.DirectorySize().NormalizeSize());

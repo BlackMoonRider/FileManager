@@ -52,8 +52,8 @@ namespace FileManager
             this.newForegroundColor = newForegroundColor;
             this.newBackgroundColor = newBackgroundColor;
 
-            width = 30;
-            height = 10;
+            width = 50;
+            height = 13;
 
             offsetX = Console.WindowWidth / 2 - width / 2;
             offsetY = Console.WindowHeight / 2 - height / 2;
@@ -78,7 +78,7 @@ namespace FileManager
             offsetX++;
             Console.CursorTop = offsetY;
             Console.CursorLeft = offsetX;
-            Console.WriteLine(header);
+            Console.WriteLine(header.NormalizeString(width - 1));
 
             offsetY += 2;
         }

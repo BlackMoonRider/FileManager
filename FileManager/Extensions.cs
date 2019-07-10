@@ -79,6 +79,36 @@ namespace FileManager
             return $"{kbytes} TB";
         }
 
+        public static string NormalizeString(this string inputString, int maxLength)
+        {
+            string[] inputLines = inputString.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+
+            StringBuilder stringBuilder = new StringBuilder();
+
+            for (int i = 0; i < inputLines.Length; i++)
+            {
+                if (inputLines[i].Length < maxLength)
+                {
+                    if (i == inputLines.Length - 1)
+                        stringBuilder.Append(inputLines[i].PadRight(maxLength, ' '));
+                    else
+                        stringBuilder.AppendLine(inputLines[i].PadRight(maxLength, ' '));
+                }
+                else
+                {
+                    if (i == inputLines.Length - 1)
+                        stringBuilder.Append(inputLines[i].Substring(0, maxLength - 4) + "... ");
+                    else
+                        stringBuilder.AppendLine(inputLines[i].Substring(0, maxLength - 4) + "... ");
+
+                }
+            }
+
+            var tmp = stringBuilder.ToString();
+
+            return stringBuilder.ToString();
+        }
+
         public static void RefreshScreen(PanelSet panelSet)
         {
             Console.Clear();
