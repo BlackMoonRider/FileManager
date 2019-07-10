@@ -49,13 +49,13 @@ namespace FileManager
             ulong size = 0;
             FileInfo[] fileInfos = directoryInfo.GetFiles();
 
-            foreach (FileInfo f in fileInfos)
-                size += (ulong)f.Length;
+            foreach (FileInfo file in fileInfos)
+                size += (ulong)file.Length;
 
             DirectoryInfo[] directoryInfos = directoryInfo.GetDirectories();
 
-            foreach (DirectoryInfo d in directoryInfos)
-                size += DirectorySize(d);
+            foreach (DirectoryInfo directory in directoryInfos)
+                size += DirectorySize(directory);
 
             return size;
         }
