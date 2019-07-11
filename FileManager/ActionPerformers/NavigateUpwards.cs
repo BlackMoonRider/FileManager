@@ -13,7 +13,7 @@ namespace FileManager.ActionPerformers
         {
             PanelSet panelSet = (PanelSet)actionPerformerArgs.Sender;
 
-            var parent = Directory.GetParent(Directory.GetParent(panelSet.FocusedListView.Current.FullName).FullName)
+            var parent = Directory.GetParent(panelSet.FocusedListView.Current.FullName)
                 ?? new DirectoryInfo(Path.GetPathRoot(panelSet.FocusedListView.Current.FullName));
 
             panelSet.FocusedListView.Current = parent;

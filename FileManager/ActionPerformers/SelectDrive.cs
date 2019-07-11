@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,8 +11,18 @@ namespace FileManager.ActionPerformers
     {
         public override void Do(ActionPerformerArgs actionPerformerArgs)
         {
+            PanelSet panelSet = (PanelSet)actionPerformerArgs.Sender;
             PopupList popupList = new PopupList("Select drive:");
-            ((PanelSet)actionPerformerArgs.Sender).Modal = popupList;
+
+            popupList.ListView = new ListView<DirectoryInfo>(popupList.OffsetX, popupList.OffsetY, popupList.Height, 0);
+            popupList.ListView.Focused = true;
+            popupList.ListView.ColumnWidths = new List<int>() { 7, popupList.Width - 17, 10 };
+            popupList.ListView.Items = DriveInfo.GetDrives()
+                .Where(d => d.IsReady)
+                .Select(d => new ListViewItem<DirectoryInfo>(d.RootDirectory, d.RootDirectory.FullName, d.VolumeLabel, Extensions.PrintAsNormalizedSize(d.TotalSize)))
+                .ToList();
+
+            panelSet.Modal = popupList;
             popupList.Render();
         }
     }

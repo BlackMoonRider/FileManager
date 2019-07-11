@@ -40,7 +40,12 @@ namespace FileManager.ActionPerformers
                     Directory.Move(source, destination);
             }
 
-            Extensions.RefreshScreen(panelSet);
+            if (action == Actions.Copy)
+                Extensions.RefreshFocusedPanel(panelSet);
+
+            else if (action == Actions.Cut)
+                Extensions.RefreshScreen(panelSet);
+
         }
     }
 }

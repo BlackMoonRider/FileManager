@@ -27,12 +27,12 @@ namespace FileManager
 
             while (NameIsValid(newName))
             {
-                Console.CursorTop = offsetY + 1;
-                Console.CursorLeft = offsetX + 1;
-                Console.WriteLine(message.NormalizeStringLength(width - 2));
+                Console.CursorTop = OffsetY + 1;
+                Console.CursorLeft = OffsetX + 1;
+                Console.WriteLine(message.NormalizeStringLength(Width - 2));
 
-                Console.CursorTop = offsetY + 3;
-                Console.CursorLeft = offsetX + 1;
+                Console.CursorTop = OffsetY + 3;
+                Console.CursorLeft = OffsetX + 1;
                 newName = Console.ReadLine();
             }
 
@@ -43,7 +43,7 @@ namespace FileManager
             Extensions.RefreshScreen(panelSet);
         }
 
-        private bool NameIsValid(string name) // TODO: Add all real Windows names constraints 
+        private bool NameIsValid(string name)
         {
             if (String.IsNullOrWhiteSpace(name))
                 return true;

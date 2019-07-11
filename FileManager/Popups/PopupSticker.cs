@@ -18,17 +18,6 @@ namespace FileManager
             this.message = message;
         }
 
-        public PopupSticker(PanelSet panelSet, string message, string header = "Info") : base(header)
-        {
-            this.panelSet = panelSet;
-            this.message = message;
-        }
-
-        public PopupSticker(string message, string header = "Info") : base(header)
-        {
-            this.message = message;
-        }
-
         public override void Render()
         {
             base.Render();
@@ -39,9 +28,9 @@ namespace FileManager
 
                 for (int i = 0; i < lines.Length; i++)
                 {
-                    Console.CursorTop = offsetY + i;
-                    Console.CursorLeft = offsetX;
-                    Console.WriteLine(lines[i].NormalizeStringLength(width - 1));
+                    Console.CursorTop = OffsetY + i;
+                    Console.CursorLeft = OffsetX;
+                    Console.WriteLine(lines[i].NormalizeStringLength(Width - 1));
                 }
             }
 

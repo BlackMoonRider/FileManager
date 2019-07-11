@@ -32,9 +32,8 @@ namespace FileManager
                 return focusedPanel;
             }
         }
-
         public IActionPerformerBehavior ActionPerformer { get; private set; }
-        public Actions CurrentAction;
+        public Actions CurrentAction { get; set; }
 
         public PanelSet(int numberOfPanels)
         {
@@ -50,8 +49,6 @@ namespace FileManager
                 listView.Items = GetItems(Panels[i]);
                 ActionPerformer = new NoAction();
             }
-
-            //Panels[0].Focused = true;
         }
 
         public ListView<FileSystemInfo> FocusedListView => GetFocusedListView();
@@ -68,18 +65,39 @@ namespace FileManager
 
         public List<ListViewItem<FileSystemInfo>> GetItems(ListView<FileSystemInfo> listView)
         {
-            var current = (DirectoryInfo)listView.Current;
+            DirectoryInfo current = (DirectoryInfo)listView.Current;
 
-            return current
-                .GetFileSystemInfos()
-                .Select(
-                lvi => new ListViewItem<FileSystemInfo>(
-                lvi,
-                lvi.Name,
-                lvi is DirectoryInfo dir ? "<dir>" : lvi.Extension,
-                lvi is FileInfo file ? Extensions.NormalizeSize(file.Length) : ""))
-                .ToList();
-        }
+            try
+            {
+                return current
+                    .GetFileSystemInfos()
+                    .Select(
+                    lvi => new ListViewItem<FileSystemInfo>(
+                    lvi,
+                    lvi.Name,
+                    lvi is DirectoryInfo dir ? "<dir>" : lvi.Extension,
+                    lvi is FileInfo file ? Extensions.PrintAsNormalizedSize(file.Length) : ""))
+                    .ToList();
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                var parent = Directory.GetParent(listView.Current.FullName)
+                ?? new DirectoryInfo(Path.GetPathRoot(listView.Current.FullName));
+
+                listView.Current = parent;
+
+                var popup = new PopupMessage(this, $"Access denied.", "Error");
+                popup.Render();
+                
+                current = parent;
+
+                return GetItems(listView);
+            }
+            catch
+            {
+                throw;
+            }
+    }
 
         public void Update(ConsoleKeyInfo key)
         {

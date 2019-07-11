@@ -60,10 +60,9 @@ namespace FileManager
             return size;
         }
 
-        public static string NormalizeSize(this long bytes) => NormalizeSize((ulong)bytes);
-        public static string NormalizeSize(this int bytes) => NormalizeSize((ulong)bytes);
+        public static string PrintAsNormalizedSize(this long bytes) => PrintAsNormalizedSize((ulong)bytes);
 
-        public static string NormalizeSize(this ulong bytes)
+        public static string PrintAsNormalizedSize(this ulong bytes)
         {
             if (bytes < 1024)
                 return $"{bytes} Byte";
