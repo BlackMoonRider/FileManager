@@ -39,7 +39,7 @@ namespace FileManager
 
             RestoreBackgroundColors();
 
-            Extensions.RefreshScreen(panelSet);
+            panelSet.RefreshScreen();
         }
 
         private bool NameIsValid(string name)

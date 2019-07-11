@@ -9,41 +9,6 @@ namespace FileManager
 {
     static class Extensions
     {
-        public static void DirectoryCopy(string sourceName, string destinationName, bool copySubDirs = true)
-        {
-            DirectoryInfo directoryInfo = new DirectoryInfo(sourceName);
-
-            if (!directoryInfo.Exists)
-            {
-                throw new DirectoryNotFoundException(
-                    "Source directory does not exist or could not be found: "
-                    + sourceName);
-            }
-
-            DirectoryInfo[] dirs = directoryInfo.GetDirectories();
-
-            if (!Directory.Exists(destinationName))
-            {
-                Directory.CreateDirectory(destinationName);
-            }
-
-            FileInfo[] files = directoryInfo.GetFiles();
-            foreach (FileInfo file in files)
-            {
-                string tempPath = Path.Combine(destinationName, file.Name);
-                file.CopyTo(tempPath, false);
-            }
-
-            if (copySubDirs)
-            {
-                foreach (DirectoryInfo subdir in dirs)
-                {
-                    string tempPath = Path.Combine(destinationName, subdir.Name);
-                    DirectoryCopy(subdir.FullName, tempPath, copySubDirs);
-                }
-            }
-        }
-
         public static ulong DirectorySize(this DirectoryInfo directoryInfo)
         {
             ulong size = 0;
@@ -117,41 +82,6 @@ namespace FileManager
             return stringBuilder.ToString();
         }
 
-        public static void RefreshScreen(PanelSet panelSet)
-        {
-            Console.Clear();
-
-            foreach (var panel in panelSet.Panels)
-            {
-                panel.Clean();
-                panel.Items = panelSet.GetItems(panel);
-                panel.Render();
-            }
-
-            RenderLegend(panelSet);
-        }
-
-        public static void RefreshFocusedPanel(PanelSet panelSet)
-        {
-            foreach (var panel in panelSet.Panels)
-            {
-                if (panel.Focused)
-                {
-                    panel.Clean();
-                    panel.Items = panelSet.GetItems(panel);
-                    panel.Render();
-                }
-            }
-
-            RenderLegend(panelSet);
-        }
-
-        private static void RenderLegend(PanelSet panelSet)
-        {
-            PopupSticker legend = new PopupSticker(1, Console.WindowWidth, 0, 47, panelSet, String.Empty,
-                " F1 Copy | F2 Rename | F3 Cut | F4 Paste | F5 Root | F6 Properties | F7 New Folder | F8 Drives ");
-
-            legend.Render();
-        }
+        
     }
 }

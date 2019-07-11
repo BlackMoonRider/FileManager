@@ -124,7 +124,7 @@ namespace FileManager
                     {
                         FocusedPanel.Current = new DirectoryInfo(Modal.ListView.SelectedItem.Item.FullName);
                         Modal = null;
-                        Extensions.RefreshScreen(this);
+                        RefreshScreen();
                     }
                     break;
                 case ConsoleKey.Escape:
@@ -133,7 +133,7 @@ namespace FileManager
                     else
                     {
                         Modal = null;
-                        Extensions.RefreshScreen(this);
+                        RefreshScreen();
                     }
                     break;
                 default:
@@ -142,6 +142,43 @@ namespace FileManager
                     ActionPerformer.Do(args);
                     break;
             }
+        }
+
+        public void RefreshScreen()
+        {
+            Console.Clear();
+
+            foreach (var panel in Panels)
+            {
+                panel.Clean();
+                panel.Items = GetItems(panel);
+                panel.Render();
+            }
+
+            RenderLegend(this);
+        }
+
+        public void RefreshFocusedPanel()
+        {
+            foreach (var panel in Panels)
+            {
+                if (panel.Focused)
+                {
+                    panel.Clean();
+                    panel.Items = GetItems(panel);
+                    panel.Render();
+                }
+            }
+
+            RenderLegend(this);
+        }
+
+        private void RenderLegend(PanelSet panelSet)
+        {
+            PopupSticker legend = new PopupSticker(1, Console.WindowWidth, 0, 47, panelSet, String.Empty,
+                " F1 Copy | F2 Rename | F3 Cut | F4 Paste | F5 Root | F6 Properties | F7 New Folder | F8 Drives ");
+
+            legend.Render();
         }
     }
 }

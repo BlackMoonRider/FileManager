@@ -35,7 +35,7 @@ namespace FileManager
             RestoreBackgroundColors();
 
             if (panelSet != null)
-                Extensions.RefreshScreen(panelSet);
+                panelSet.RefreshScreen();
         }
     }
 }

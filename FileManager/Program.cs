@@ -19,7 +19,7 @@ namespace FileManager
 
             PanelSet panelSet = new PanelSet(2);
 
-            Extensions.RefreshScreen(panelSet);
+            panelSet.RefreshScreen();
 
             while (true)
             {

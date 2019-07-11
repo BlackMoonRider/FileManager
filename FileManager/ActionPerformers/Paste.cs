@@ -34,17 +34,17 @@ namespace FileManager.ActionPerformers
             else if (sourceInfo is DirectoryInfo directoryInfo)
             {
                 if (action == Actions.Copy)
-                    Extensions.DirectoryCopy(source, destination);
+                    Utility.DirectoryCopy(source, destination);
 
                 else if (action == Actions.Cut)
                     Directory.Move(source, destination);
             }
 
             if (action == Actions.Copy)
-                Extensions.RefreshFocusedPanel(panelSet);
+                panelSet.RefreshFocusedPanel();
 
             else if (action == Actions.Cut)
-                Extensions.RefreshScreen(panelSet);
+                panelSet.RefreshScreen();
 
         }
     }

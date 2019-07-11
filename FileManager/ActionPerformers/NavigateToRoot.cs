@@ -17,7 +17,7 @@ namespace FileManager.ActionPerformers
 
             panelSet.FocusedListView.Current = new DirectoryInfo(root);
 
-            Extensions.RefreshFocusedPanel(panelSet);
+            panelSet.RefreshFocusedPanel();
         }
     }
 }

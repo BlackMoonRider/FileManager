@@ -50,7 +50,7 @@ namespace FileManager.ActionPerformers
             PopupMessage popupMessage = new PopupMessage(panelSet, info, "Properties");
             popupMessage.Render();
 
-            Extensions.RefreshScreen(panelSet);
+            panelSet.RefreshScreen();
         }
     }
 }
