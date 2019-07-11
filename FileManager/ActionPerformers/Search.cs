@@ -24,7 +24,9 @@ namespace FileManager.ActionPerformers
             popupList.ListView.ColumnWidths = new List<int>() { 30, 10, 10 };
             popupList.ListView.Current = panelSet.FocusedPanel.Current;
             panelSet.Modal = popupList;
-            popupList.ListView.Items = panelSet.GetItems(popupList.ListView.Current).Where(i => i.Item.Name.Contains(userInput)).ToList();
+
+            var tmp = GetAllFilesAndFolders((DirectoryInfo)popupList.ListView.Current);
+            popupList.ListView.Items = GetAllFilesAndFolders((DirectoryInfo)popupList.ListView.Current).Where(i => i.Item.Name.Contains(userInput)).ToList();
 
             if (popupList.ListView.Items.Count > 0)
                 popupList.ListView.Current = panelSet.Modal.ListView.Items[0].Item;
@@ -32,6 +34,28 @@ namespace FileManager.ActionPerformers
                 return;
 
             popupList.Render();
+        }
+
+        private List<ListViewItem<FileSystemInfo>> GetAllFilesAndFolders(DirectoryInfo directoryInfo)
+        {
+            List<ListViewItem<FileSystemInfo>> filesAndFolders = new List<ListViewItem<FileSystemInfo>>();
+
+            FileInfo[] fileInfos = directoryInfo.GetFiles();
+            filesAndFolders.AddRange(
+                fileInfos
+                .Select(f => new ListViewItem<FileSystemInfo>(f, f.Name, f.Extension, f.Length.PrintAsNormalizedSize()))
+                .ToList());
+
+            DirectoryInfo[] directoryInfos = directoryInfo.GetDirectories();
+            filesAndFolders.AddRange(
+                directoryInfos
+                .Select(d => new ListViewItem<FileSystemInfo>(d, d.Name, "<dir>", ""))
+                .ToList());
+
+            foreach (DirectoryInfo directory in directoryInfos)
+                filesAndFolders.AddRange(GetAllFilesAndFolders(directory));
+
+            return filesAndFolders;
         }
     }
 }
