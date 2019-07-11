@@ -19,7 +19,6 @@ namespace FileManager.ActionPerformers
             var action = panelSet.CurrentAction;
 
             var source = sourceInfo.FullName;
-            
             var destination = senderInfo.FullName + "\\" + sourceInfo.Name;
 
             if (sourceInfo is FileInfo file)
@@ -34,13 +33,17 @@ namespace FileManager.ActionPerformers
             else if (sourceInfo is DirectoryInfo directoryInfo)
             {
                 if (action == Actions.Copy)
-                    Extensions.DirectoryCopy(source, destination);
+                    Utility.DirectoryCopy(source, destination);
 
                 else if (action == Actions.Cut)
                     Directory.Move(source, destination);
             }
 
-            Extensions.RefreshScreen(panelSet);
+            if (action == Actions.Copy)
+                panelSet.RefreshFocusedPanel();
+
+            else if (action == Actions.Cut)
+                panelSet.RefreshScreen();
         }
     }
 }

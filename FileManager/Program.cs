@@ -19,7 +19,7 @@ namespace FileManager
 
             PanelSet panelSet = new PanelSet(2);
 
-            Extensions.RefreshScreen(panelSet);
+            panelSet.RefreshScreen();
 
             while (true)
             {
@@ -31,7 +31,7 @@ namespace FileManager
                 catch (Exception ex)
                 {
                     var exception = ex;
-                    var popup = new PopupMessage(panelSet, "This operation cannot be performed.", "Error"); // TODO: Impelement saving of the current path (to avoid the "Access denied" error)
+                    var popup = new PopupMessage(panelSet, $"This operation cannot be performed.\r\n{ex.Message}", "Error");
                     popup.Render();
                 }
                 

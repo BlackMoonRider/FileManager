@@ -9,17 +9,16 @@ namespace FileManager
 {
     abstract class AbstractListView<T>
     {
-        public List<int> ColumnWidths { get; set; }
-        public List<T> Items { get; set; }
+        protected ConsoleColor ForegroundColor, BackgroundColorFocused, BackgroundColorUnfocused;
         protected int offsetX, offsetY;
         protected readonly int height;
         protected bool isRendered;
         protected int scroll;
         protected int selectedIndex;
         protected int previouslySelectedIndex;
-
+        public List<int> ColumnWidths { get; set; }
+        public List<T> Items { get; set; }
         public IActionPerformerBehavior ActionPerformer { get; private set; } = new NoAction();
-
         public int SelectedIndex
         {
             get => selectedIndex;
@@ -29,12 +28,11 @@ namespace FileManager
                 selectedIndex = value;
             }
         }
-
         public T SelectedItem => Items[SelectedIndex];
-
         public bool Focused { get; set; }
 
-        public AbstractListView(int offsetX, int offsetY, int height, int offsetXMultiplier)
+        public AbstractListView(int offsetX, int offsetY, int height, int offsetXMultiplier,
+            ConsoleColor newForegroundColor, ConsoleColor newBackgroundColorFocused, ConsoleColor newBackgroundColorUnfocused)
         {
             ColumnWidths = new List<int> { 32, 10, 10 };
 
@@ -43,6 +41,10 @@ namespace FileManager
             this.offsetY = offsetY;
 
             this.height = height;
+
+            this.ForegroundColor = newForegroundColor;
+            this.BackgroundColorFocused = newBackgroundColorFocused;
+            this.BackgroundColorUnfocused = newBackgroundColorUnfocused;
         }
 
         abstract public void Clean();

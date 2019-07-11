@@ -21,7 +21,7 @@ namespace FileManager.ActionPerformers
 
             Directory.CreateDirectory(currentPath);
 
-            Extensions.RefreshFocusedPanel(panelSet);
+            panelSet.RefreshFocusedPanel();
         }
     }
 }

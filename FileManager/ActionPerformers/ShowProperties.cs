@@ -27,7 +27,7 @@ namespace FileManager.ActionPerformers
                 stringBuilder.AppendLine("Read-only:          " + ((readOnly == 1) ? "true" : "false"));
                 stringBuilder.AppendLine("Last read time:     " + sourceInfo.LastAccessTime);
                 stringBuilder.AppendLine("Last write time:    " + sourceInfo.LastWriteTime);
-                stringBuilder.AppendLine("Size:               " + fileInfo.Length.NormalizeSize());
+                stringBuilder.AppendLine("Size:               " + fileInfo.Length.PrintAsNormalizedSize());
 
                 info = stringBuilder.ToString();
             }
@@ -40,7 +40,7 @@ namespace FileManager.ActionPerformers
                 stringBuilder.AppendLine("Read-only:          " + ((readOnly == 1) ? "true" : "false"));
                 stringBuilder.AppendLine("Last read time:     " + sourceInfo.LastAccessTime);
                 stringBuilder.AppendLine("Last write time:    " + sourceInfo.LastWriteTime);
-                stringBuilder.AppendLine("Size:               " + directoryInfo.DirectorySize().NormalizeSize());
+                stringBuilder.AppendLine("Size:               " + directoryInfo.DirectorySize().PrintAsNormalizedSize());
                 stringBuilder.AppendLine("Files:              " + Directory.GetFiles(sourceInfo.FullName).Count());
                 stringBuilder.AppendLine("Folders:            " + Directory.GetDirectories(sourceInfo.FullName).Count());
 
@@ -50,7 +50,7 @@ namespace FileManager.ActionPerformers
             PopupMessage popupMessage = new PopupMessage(panelSet, info, "Properties");
             popupMessage.Render();
 
-            Extensions.RefreshScreen(panelSet);
+            panelSet.RefreshScreen();
         }
     }
 }

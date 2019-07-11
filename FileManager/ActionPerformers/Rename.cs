@@ -32,7 +32,7 @@ namespace FileManager.ActionPerformers
                 Directory.Move(source, destination);
             }
 
-            Extensions.RefreshScreen(panelSet);
+            panelSet.RefreshScreen();
         }
     }
 }

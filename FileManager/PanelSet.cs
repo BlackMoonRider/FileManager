@@ -32,9 +32,8 @@ namespace FileManager
                 return focusedPanel;
             }
         }
-
         public IActionPerformerBehavior ActionPerformer { get; private set; }
-        public Actions CurrentAction;
+        public Actions CurrentAction { get; set; }
 
         public PanelSet(int numberOfPanels)
         {
@@ -44,14 +43,16 @@ namespace FileManager
             {
                 ListView<FileSystemInfo> listView = new ListView<FileSystemInfo>(10, 2, 43, i);
                 Panels.Add(listView);
-                listView.Current = new DirectoryInfo("C:\\");
+                listView.Current = new DirectoryInfo(
+                    DriveInfo.GetDrives()
+                    .Where(d => d.IsReady).ToList()
+                    .First()
+                    .Name);
                 if (i == 0)
                     Panels[i].Focused = true;
                 listView.Items = GetItems(Panels[i]);
                 ActionPerformer = new NoAction();
             }
-
-            //Panels[0].Focused = true;
         }
 
         public ListView<FileSystemInfo> FocusedListView => GetFocusedListView();
@@ -68,17 +69,38 @@ namespace FileManager
 
         public List<ListViewItem<FileSystemInfo>> GetItems(ListView<FileSystemInfo> listView)
         {
-            var current = (DirectoryInfo)listView.Current;
+            DirectoryInfo current = (DirectoryInfo)listView.Current;
 
-            return current
-                .GetFileSystemInfos()
-                .Select(
-                lvi => new ListViewItem<FileSystemInfo>(
-                lvi,
-                lvi.Name,
-                lvi is DirectoryInfo dir ? "<dir>" : lvi.Extension,
-                lvi is FileInfo file ? Extensions.NormalizeSize(file.Length) : ""))
-                .ToList();
+            try
+            {
+                return current
+                    .GetFileSystemInfos()
+                    .Select(
+                    lvi => new ListViewItem<FileSystemInfo>(
+                    lvi,
+                    lvi.Name,
+                    lvi is DirectoryInfo dir ? "<dir>" : lvi.Extension,
+                    lvi is FileInfo file ? Extensions.PrintAsNormalizedSize(file.Length) : ""))
+                    .ToList();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                var parent = Directory.GetParent(listView.Current.FullName)
+                    ?? new DirectoryInfo(Path.GetPathRoot(listView.Current.FullName));
+
+                listView.Current = parent;
+
+                var popup = new PopupMessage(this, "Access denied.", "Error");
+                popup.Render();
+                
+                current = parent;
+
+                return GetItems(listView);
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public void Update(ConsoleKeyInfo key)
@@ -102,7 +124,7 @@ namespace FileManager
                     {
                         FocusedPanel.Current = new DirectoryInfo(Modal.ListView.SelectedItem.Item.FullName);
                         Modal = null;
-                        Extensions.RefreshScreen(this);
+                        RefreshScreen();
                     }
                     break;
                 case ConsoleKey.Escape:
@@ -111,7 +133,7 @@ namespace FileManager
                     else
                     {
                         Modal = null;
-                        Extensions.RefreshScreen(this);
+                        RefreshScreen();
                     }
                     break;
                 default:
@@ -120,6 +142,43 @@ namespace FileManager
                     ActionPerformer.Do(args);
                     break;
             }
+        }
+
+        public void RefreshScreen()
+        {
+            Console.Clear();
+
+            foreach (var panel in Panels)
+            {
+                panel.Clean();
+                panel.Items = GetItems(panel);
+                panel.Render();
+            }
+
+            RenderLegend(this);
+        }
+
+        public void RefreshFocusedPanel()
+        {
+            foreach (var panel in Panels)
+            {
+                if (panel.Focused)
+                {
+                    panel.Clean();
+                    panel.Items = GetItems(panel);
+                    panel.Render();
+                }
+            }
+
+            RenderLegend(this);
+        }
+
+        private void RenderLegend(PanelSet panelSet)
+        {
+            PopupSticker legend = new PopupSticker(1, Console.WindowWidth, 0, 47, panelSet, String.Empty,
+                " F1 Copy | F2 Rename | F3 Cut | F4 Paste | F5 Root | F6 Properties | F7 New Folder | F8 Drives ");
+
+            legend.Render();
         }
     }
 }
