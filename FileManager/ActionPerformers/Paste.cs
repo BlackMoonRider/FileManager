@@ -19,7 +19,6 @@ namespace FileManager.ActionPerformers
             var action = panelSet.CurrentAction;
 
             var source = sourceInfo.FullName;
-            
             var destination = senderInfo.FullName + "\\" + sourceInfo.Name;
 
             if (sourceInfo is FileInfo file)
@@ -45,7 +44,6 @@ namespace FileManager.ActionPerformers
 
             else if (action == Actions.Cut)
                 panelSet.RefreshScreen();
-
         }
     }
 }

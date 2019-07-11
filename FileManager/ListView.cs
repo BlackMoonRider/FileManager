@@ -12,8 +12,11 @@ namespace FileManager
     {
         public T Current { get; set; }
 
-        public ListView(int offsetX, int offsetY, int height, int offsetXMultiplier) 
-            : base(offsetX, offsetY, height, offsetXMultiplier)
+        public ListView(int offsetX, int offsetY, int height, int offsetXMultiplier,
+            ConsoleColor newForegroundColor = ConsoleColor.Black,
+            ConsoleColor newBackgroundColorFocused = ConsoleColor.White,
+            ConsoleColor newBackgroundColorUnfocused = ConsoleColor.DarkGray) 
+            : base(offsetX, offsetY, height, offsetXMultiplier, newForegroundColor, newBackgroundColorFocused, newBackgroundColorUnfocused)
         { }
 
         override public void Clean()
@@ -46,8 +49,8 @@ namespace FileManager
                 var savedBackgroundColor = Console.BackgroundColor;
                 if (elementIndex == selectedIndex)
                 {
-                    Console.ForegroundColor = ConsoleColor.Black;
-                    Console.BackgroundColor = Focused ? ConsoleColor.White : ConsoleColor.DarkGray;
+                    Console.ForegroundColor = ForegroundColor;
+                    Console.BackgroundColor = Focused ? BackgroundColorFocused : BackgroundColorUnfocused;
                 }
                 Console.CursorLeft = offsetX;
                 Console.CursorTop = i + offsetY;

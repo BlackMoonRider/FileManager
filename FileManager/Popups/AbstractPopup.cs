@@ -9,7 +9,10 @@ namespace FileManager
 {
     abstract class AbstractPopup
     {
-        private ConsoleColor savedForegroundColor, savedBackgroundColor, newForegroundColor, newBackgroundColor;
+        public ConsoleColor SavedForegroundColor { get; protected set; }
+        public ConsoleColor SavedBackgroundColor { get; protected set; }
+        public ConsoleColor ForegroundColor { get; protected set; }
+        public ConsoleColor BackgroundColor { get; protected set; }
         public int OffsetX { get; protected set; }
         public int OffsetY { get; protected set; }
         public int Height { get; protected set; }
@@ -21,12 +24,11 @@ namespace FileManager
             ConsoleColor newForegroundColor = ConsoleColor.DarkMagenta,
             ConsoleColor newBackgroundColor = ConsoleColor.DarkCyan)
         {
-
             this.Height = height;
             this.Width = width;
             this.header = header;
-            this.newForegroundColor = newForegroundColor;
-            this.newBackgroundColor = newBackgroundColor;
+            this.ForegroundColor = newForegroundColor;
+            this.BackgroundColor = newBackgroundColor;
 
             this.OffsetX = offsetX;
             this.OffsetY = offsetY;
@@ -37,8 +39,8 @@ namespace FileManager
             ConsoleColor newBackgroundColor = ConsoleColor.DarkCyan)
         {
             this.header = header;
-            this.newForegroundColor = newForegroundColor;
-            this.newBackgroundColor = newBackgroundColor;
+            this.ForegroundColor = newForegroundColor;
+            this.BackgroundColor = newBackgroundColor;
 
             Width = width;
             Height = height;
@@ -53,8 +55,8 @@ namespace FileManager
 
             SaveBackgroundColors();
 
-            Console.ForegroundColor = newForegroundColor;
-            Console.BackgroundColor = newBackgroundColor;
+            Console.ForegroundColor = ForegroundColor;
+            Console.BackgroundColor = BackgroundColor;
 
             for (int i = 0; i < Height; i++)
             {
@@ -73,14 +75,14 @@ namespace FileManager
 
         protected void SaveBackgroundColors()
         {
-            savedForegroundColor = Console.ForegroundColor;
-            savedBackgroundColor = Console.BackgroundColor;
+            SavedForegroundColor = Console.ForegroundColor;
+            SavedBackgroundColor = Console.BackgroundColor;
         }
 
         protected void RestoreBackgroundColors()
         {
-            Console.ForegroundColor = savedForegroundColor;
-            Console.BackgroundColor = savedBackgroundColor;
+            Console.ForegroundColor = SavedForegroundColor;
+            Console.BackgroundColor = SavedBackgroundColor;
         }
     }
 }
