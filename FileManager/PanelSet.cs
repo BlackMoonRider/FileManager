@@ -43,7 +43,11 @@ namespace FileManager
             {
                 ListView<FileSystemInfo> listView = new ListView<FileSystemInfo>(10, 2, 43, i);
                 Panels.Add(listView);
-                listView.Current = new DirectoryInfo("C:\\");
+                listView.Current = new DirectoryInfo(
+                    DriveInfo.GetDrives()
+                    .Where(d => d.IsReady).ToList()
+                    .First()
+                    .Name);
                 if (i == 0)
                     Panels[i].Focused = true;
                 listView.Items = GetItems(Panels[i]);
