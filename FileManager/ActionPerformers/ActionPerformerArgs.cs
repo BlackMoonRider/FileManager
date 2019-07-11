@@ -8,11 +8,6 @@ using System.Threading.Tasks;
 
 namespace FileManager
 {
-    enum Actions
-    {
-        Copy,
-        Cut,
-    }
     class ActionPerformerArgs
     {
         public ConsoleKeyInfo Key;

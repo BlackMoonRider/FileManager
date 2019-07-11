@@ -83,14 +83,14 @@ namespace FileManager
                     lvi is FileInfo file ? Extensions.PrintAsNormalizedSize(file.Length) : ""))
                     .ToList();
             }
-            catch (UnauthorizedAccessException ex)
+            catch (UnauthorizedAccessException)
             {
                 var parent = Directory.GetParent(listView.Current.FullName)
-                ?? new DirectoryInfo(Path.GetPathRoot(listView.Current.FullName));
+                    ?? new DirectoryInfo(Path.GetPathRoot(listView.Current.FullName));
 
                 listView.Current = parent;
 
-                var popup = new PopupMessage(this, $"Access denied.", "Error");
+                var popup = new PopupMessage(this, "Access denied.", "Error");
                 popup.Render();
                 
                 current = parent;
@@ -101,7 +101,7 @@ namespace FileManager
             {
                 throw;
             }
-    }
+        }
 
         public void Update(ConsoleKeyInfo key)
         {

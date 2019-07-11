@@ -46,10 +46,6 @@ namespace FileManager.ActionPerformers
                     return new SelectDrive();
                 case ConsoleKey.Backspace:
                     return new NavigateUpwards();
-#if DEBUG
-                case ConsoleKey.F12:
-                    return new Test();
-#endif
                 default:
                     return new NoAction();
             }

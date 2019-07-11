@@ -10,11 +10,11 @@ namespace FileManager
 {
     class ListView<T> : AbstractListView<ListViewItem<T>>
     {
+        public T Current { get; set; }
+
         public ListView(int offsetX, int offsetY, int height, int offsetXMultiplier) 
             : base(offsetX, offsetY, height, offsetXMultiplier)
         { }
-
-        public T Current { get; set; }
 
         override public void Clean()
         {
@@ -58,6 +58,5 @@ namespace FileManager
             }
             isRendered = true;
         }
-
     }
 }

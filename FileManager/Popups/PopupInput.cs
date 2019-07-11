@@ -10,7 +10,6 @@ namespace FileManager
     {
         private PanelSet panelSet;
         private string message;
-
         public string UserInputResult { get; private set; }
 
         public PopupInput(PanelSet panelSet, string message, string header = "Input") : base(header)

@@ -44,9 +44,9 @@
   <ItemGroup>
     <Compile Include="AbstarctListViewItem.cs" />
     <Compile Include="AbstractListView.cs" />
+    <Compile Include="ActionPerformers\Actions.cs" />
     <Compile Include="ActionPerformers\CreateNewFolder.cs" />
     <Compile Include="Popups\AbstractPopup.cs" />
-    <Compile Include="ActionPerformers\AbstarctListViewItem.cs" />
     <Compile Include="ActionPerformers\AbstractActionPerformerBehavior.cs" />
     <Compile Include="ActionPerformers\ActionPerformerArgs.cs" />
     <Compile Include="ActionPerformers\ChooseNextPanel.cs" />
@@ -64,7 +64,6 @@
     <Compile Include="ActionPerformers\Rename.cs" />
     <Compile Include="ActionPerformers\SelectDrive.cs" />
     <Compile Include="ActionPerformers\ShowProperties.cs" />
-    <Compile Include="ActionPerformers\Test.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="ListView.cs" />
     <Compile Include="ListViewItem.cs" />
