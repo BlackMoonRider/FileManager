@@ -53,7 +53,16 @@ namespace FileManager.ActionPerformers
                 .ToList());
 
             foreach (DirectoryInfo directory in directoryInfos)
-                filesAndFolders.AddRange(GetAllFilesAndFolders(directory));
+            {
+                try
+                {
+                    filesAndFolders.AddRange(GetAllFilesAndFolders(directory));
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    continue;
+                }
+            }
 
             return filesAndFolders;
         }
