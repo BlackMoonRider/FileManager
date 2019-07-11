@@ -123,9 +123,15 @@ namespace FileManager
                     else
                     {
                         FileSystemInfo fileSystemInfo = Modal.ListView.SelectedItem.Item;
+
                         if (fileSystemInfo is FileInfo file)
+                        {
                             Process.Start(file.FullName);
-                        FocusedPanel.Current = new DirectoryInfo(Path.GetPathRoot(fileSystemInfo.FullName));
+                            FocusedPanel.Current = new DirectoryInfo(Path.GetPathRoot(fileSystemInfo.FullName));
+                        }
+                        else
+                            FocusedPanel.Current = new DirectoryInfo(fileSystemInfo.FullName);
+
                         Modal = null;
                         RefreshScreen();
                     }

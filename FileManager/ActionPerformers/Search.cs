@@ -18,9 +18,8 @@ namespace FileManager.ActionPerformers
             popupInput.Render();
             var userInput = popupInput.UserInputResult;
 
-            popupList.ListView = new ListView<FileSystemInfo>(popupList.OffsetX, popupList.OffsetY, popupList.Height, 0,
-                popupList.BackgroundColor, popupList.ForegroundColor);
-
+            popupList.ListView = new ListView<FileSystemInfo>(popupList.OffsetX, popupList.OffsetY, popupList.Height, 0);
+            popupList.ListView.Focused = true;
             popupList.ListView.Current = panelSet.FocusedPanel.Current;
             panelSet.Modal = popupList;
             popupList.ListView.Items = panelSet.GetItems(popupList.ListView.Current).Where(i => i.Item.Name.Contains(userInput)).ToList();
