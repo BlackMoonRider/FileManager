@@ -9,6 +9,7 @@ namespace FileManager
 {
     abstract class AbstractPopup
     {
+        protected readonly string header;
         public ConsoleColor SavedForegroundColor { get; protected set; }
         public ConsoleColor SavedBackgroundColor { get; protected set; }
         public ConsoleColor ForegroundColor { get; protected set; }
@@ -17,7 +18,6 @@ namespace FileManager
         public int OffsetY { get; protected set; }
         public int Height { get; protected set; }
         public int Width { get; protected set; }
-        protected readonly string header;
         public IActionPerformerBehavior ActionPerformer { get; protected set; }
 
         public AbstractPopup(int height, int width, int offsetX, int offsetY, string header,

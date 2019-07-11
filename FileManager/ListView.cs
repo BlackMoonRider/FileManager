@@ -59,6 +59,7 @@ namespace FileManager
                 Console.ForegroundColor = savedForegroundColor;
                 Console.BackgroundColor = savedBackgroundColor;
             }
+
             isRendered = true;
         }
     }

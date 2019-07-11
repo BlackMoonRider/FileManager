@@ -20,7 +20,7 @@ namespace FileManager.ActionPerformers
             popupList.ListView.ColumnWidths = new List<int>() { 7, popupList.Width - 17, 10 };
             popupList.ListView.Items = DriveInfo.GetDrives()
                 .Where(d => d.IsReady)
-                .Select(d => new ListViewItem<DirectoryInfo>(d.RootDirectory, d.RootDirectory.FullName, d.VolumeLabel, Extensions.PrintAsNormalizedSize(d.TotalSize)))
+                .Select(d => new ListViewItem<DirectoryInfo>(d.RootDirectory, d.RootDirectory.FullName, d.VolumeLabel, d.TotalSize.PrintAsNormalizedSize()))
                 .ToList();
 
             panelSet.Modal = popupList;

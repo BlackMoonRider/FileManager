@@ -20,7 +20,7 @@ namespace FileManager
             DirectoryInfo[] directoryInfos = directoryInfo.GetDirectories();
 
             foreach (DirectoryInfo directory in directoryInfos)
-                size += DirectorySize(directory);
+                size += directory.DirectorySize();
 
             return size;
         }
@@ -81,7 +81,5 @@ namespace FileManager
 
             return stringBuilder.ToString();
         }
-
-        
     }
 }

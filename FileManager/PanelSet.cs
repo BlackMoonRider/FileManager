@@ -80,7 +80,7 @@ namespace FileManager
                     lvi,
                     lvi.Name,
                     lvi is DirectoryInfo dir ? "<dir>" : lvi.Extension,
-                    lvi is FileInfo file ? Extensions.PrintAsNormalizedSize(file.Length) : ""))
+                    lvi is FileInfo file ? file.Length.PrintAsNormalizedSize() : ""))
                     .ToList();
             }
             catch (UnauthorizedAccessException)
