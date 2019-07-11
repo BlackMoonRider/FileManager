@@ -22,7 +22,7 @@ namespace FileManager.ActionPerformers
             {
                 listView.Clean();
                 panelSet.FocusedListView.Current = directoryInfo;
-                listView.Items = panelSet.GetItems(panelSet.FocusedPanel);
+                listView.Items = panelSet.GetItems(panelSet.FocusedPanel.Current);
             }
         }
     }

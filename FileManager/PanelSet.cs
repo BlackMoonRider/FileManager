@@ -50,7 +50,7 @@ namespace FileManager
                     .Name);
                 if (i == 0)
                     Panels[i].Focused = true;
-                listView.Items = GetItems(Panels[i]);
+                listView.Items = GetItems(Panels[i].Current);
                 ActionPerformer = new NoAction();
             }
         }
@@ -67,9 +67,9 @@ namespace FileManager
             return null;
         }
 
-        public List<ListViewItem<FileSystemInfo>> GetItems(ListView<FileSystemInfo> listView)
+        public List<ListViewItem<FileSystemInfo>> GetItems(FileSystemInfo listViewCurrent)
         {
-            DirectoryInfo current = (DirectoryInfo)listView.Current;
+            DirectoryInfo current = Modal == null ? (DirectoryInfo)listViewCurrent : (DirectoryInfo)Modal.ListView.Current;
 
             try
             {
@@ -85,17 +85,17 @@ namespace FileManager
             }
             catch (UnauthorizedAccessException)
             {
-                var parent = Directory.GetParent(listView.Current.FullName)
-                    ?? new DirectoryInfo(Path.GetPathRoot(listView.Current.FullName));
+                var parent = Directory.GetParent(listViewCurrent.FullName)
+                    ?? new DirectoryInfo(Path.GetPathRoot(listViewCurrent.FullName));
 
-                listView.Current = parent;
+                listViewCurrent = parent;
 
                 var popup = new PopupMessage(this, "Access denied.", "Error");
                 popup.Render();
                 
                 current = parent;
 
-                return GetItems(listView);
+                return GetItems(listViewCurrent);
             }
             catch
             {
@@ -122,7 +122,10 @@ namespace FileManager
                         goto default;
                     else
                     {
-                        FocusedPanel.Current = new DirectoryInfo(Modal.ListView.SelectedItem.Item.FullName);
+                        FileSystemInfo fileSystemInfo = Modal.ListView.SelectedItem.Item;
+                        if (fileSystemInfo is FileInfo file)
+                            Process.Start(file.FullName);
+                        FocusedPanel.Current = new DirectoryInfo(Path.GetPathRoot(fileSystemInfo.FullName));
                         Modal = null;
                         RefreshScreen();
                     }
@@ -151,7 +154,7 @@ namespace FileManager
             foreach (var panel in Panels)
             {
                 panel.Clean();
-                panel.Items = GetItems(panel);
+                panel.Items = Modal == null ? GetItems(panel.Current) : GetItems(Modal.ListView.Current);
                 panel.Render();
             }
 
@@ -165,7 +168,7 @@ namespace FileManager
                 if (panel.Focused)
                 {
                     panel.Clean();
-                    panel.Items = GetItems(panel);
+                    panel.Items = Modal == null ? GetItems(panel.Current) : GetItems(Modal.ListView.Current);
                     panel.Render();
                 }
             }
@@ -176,7 +179,7 @@ namespace FileManager
         private void RenderLegend(PanelSet panelSet)
         {
             PopupSticker legend = new PopupSticker(1, Console.WindowWidth, 0, 47, panelSet, String.Empty,
-                " F1 Copy | F2 Rename | F3 Cut | F4 Paste | F5 Root | F6 Properties | F7 New Folder | F8 Drives ");
+                " F1 Copy | F2 Rename | F3 Cut | F4 Paste | F5 Root | F6 Properties | F7 New Folder | F8 Drives | F9 Search ");
 
             legend.Render();
         }

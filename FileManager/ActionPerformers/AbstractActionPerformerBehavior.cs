@@ -44,6 +44,8 @@ namespace FileManager.ActionPerformers
                     return new CreateNewFolder();
                 case ConsoleKey.F8:
                     return new SelectDrive();
+                case ConsoleKey.F9:
+                    return new Search();
                 case ConsoleKey.Backspace:
                     return new NavigateUpwards();
                 default:

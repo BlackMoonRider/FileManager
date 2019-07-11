@@ -46,6 +46,7 @@
     <Compile Include="AbstractListView.cs" />
     <Compile Include="ActionPerformers\Actions.cs" />
     <Compile Include="ActionPerformers\CreateNewFolder.cs" />
+    <Compile Include="ActionPerformers\Search.cs" />
     <Compile Include="Popups\AbstractPopup.cs" />
     <Compile Include="ActionPerformers\AbstractActionPerformerBehavior.cs" />
     <Compile Include="ActionPerformers\ActionPerformerArgs.cs" />

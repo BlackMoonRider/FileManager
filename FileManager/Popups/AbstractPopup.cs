@@ -21,14 +21,14 @@ namespace FileManager
         public IActionPerformerBehavior ActionPerformer { get; protected set; }
 
         public AbstractPopup(int height, int width, int offsetX, int offsetY, string header,
-            ConsoleColor newForegroundColor = ConsoleColor.DarkMagenta,
-            ConsoleColor newBackgroundColor = ConsoleColor.DarkCyan)
+            ConsoleColor ForegroundColor = ConsoleColor.DarkMagenta,
+            ConsoleColor BackgroundColor = ConsoleColor.DarkCyan)
         {
             this.Height = height;
             this.Width = width;
             this.header = header;
-            this.ForegroundColor = newForegroundColor;
-            this.BackgroundColor = newBackgroundColor;
+            this.ForegroundColor = ForegroundColor;
+            this.BackgroundColor = BackgroundColor;
 
             this.OffsetX = offsetX;
             this.OffsetY = offsetY;

@@ -10,7 +10,7 @@ namespace FileManager
 {
     class PopupList : AbstractPopup
     {
-        public ListView<DirectoryInfo> ListView { get; set; }
+        public ListView<FileSystemInfo> ListView { get; set; }
 
         public PopupList(string header = "List") : base(header) { }
 
@@ -24,5 +24,6 @@ namespace FileManager
 
             RestoreBackgroundColors();
         }
+
     }
 }
