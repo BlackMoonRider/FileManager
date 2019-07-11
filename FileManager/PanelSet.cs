@@ -88,18 +88,16 @@ namespace FileManager
                 var parent = Directory.GetParent(listViewCurrent.FullName)
                     ?? new DirectoryInfo(Path.GetPathRoot(listViewCurrent.FullName));
 
-                listViewCurrent = parent;
+                foreach (var panel in Panels)
+                {
+                    if (panel.Focused)
+                        panel.Current = parent;
+                }
 
                 var popup = new PopupMessage(this, "Access denied.", "Error");
                 popup.Render();
-                
-                current = parent;
 
-                return GetItems(listViewCurrent);
-            }
-            catch
-            {
-                throw;
+                return GetItems(parent);
             }
         }
 
@@ -123,9 +121,15 @@ namespace FileManager
                     else
                     {
                         FileSystemInfo fileSystemInfo = Modal.ListView.SelectedItem.Item;
+
                         if (fileSystemInfo is FileInfo file)
+                        {
                             Process.Start(file.FullName);
-                        FocusedPanel.Current = new DirectoryInfo(Path.GetPathRoot(fileSystemInfo.FullName));
+                            FocusedPanel.Current = new DirectoryInfo(Path.GetPathRoot(fileSystemInfo.FullName));
+                        }
+                        else
+                            FocusedPanel.Current = new DirectoryInfo(fileSystemInfo.FullName);
+
                         Modal = null;
                         RefreshScreen();
                     }

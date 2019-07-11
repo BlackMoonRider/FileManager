@@ -52,6 +52,11 @@ namespace FileManager
                     Console.ForegroundColor = ForegroundColor;
                     Console.BackgroundColor = Focused ? BackgroundColorFocused : BackgroundColorUnfocused;
                 }
+                else
+                {
+                    Console.ForegroundColor = BackgroundColorFocused;
+                    Console.BackgroundColor = ForegroundColor;
+                }
                 Console.CursorLeft = offsetX;
                 Console.CursorTop = i + offsetY;
                 item.Render(ColumnWidths, i, offsetX, offsetY);
