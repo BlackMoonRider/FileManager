@@ -11,10 +11,7 @@ namespace FileManager.ActionPerformers
     {
         public override void Do(ActionPerformerArgs actionPerformerArgs)
         {
-            dynamic listView = actionPerformerArgs.Sender as AbstractListView<ListViewItem<FileSystemInfo>>;
-
-            if (listView == null)
-                listView = actionPerformerArgs.Sender as AbstractListView<ListViewItem<DirectoryInfo>>;
+            ListView<FileSystemInfo> listView = (ListView<FileSystemInfo>)actionPerformerArgs.Sender;
 
             if (listView.SelectedIndex < listView.Items.Count - 1)
                 listView.SelectedIndex++;
