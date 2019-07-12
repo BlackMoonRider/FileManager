@@ -34,8 +34,8 @@ namespace FileManager.ActionPerformers
             else if (sourceInfo is DirectoryInfo directoryInfo)
             {
                 stringBuilder.AppendLine("Size:               " + directoryInfo.DirectorySize().PrintAsNormalizedSize());
-                stringBuilder.AppendLine("Files:              " + Directory.GetFiles(sourceInfo.FullName).Count());
-                stringBuilder.AppendLine("Folders:            " + Directory.GetDirectories(sourceInfo.FullName).Count());
+                stringBuilder.AppendLine("Files:              " + Directory.GetFiles(sourceInfo.FullName).Length);
+                stringBuilder.AppendLine("Folders:            " + Directory.GetDirectories(sourceInfo.FullName).Length);
             }
 
             info = stringBuilder.ToString();
