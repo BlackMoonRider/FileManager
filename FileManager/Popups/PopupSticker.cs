@@ -10,10 +10,9 @@ namespace FileManager
     {
         private string message;
 
-        public PopupSticker(int height, int width, int offsetX, int offsetY, PanelSet panelSet, string message, string header = "Info") 
+        public PopupSticker(int height, int width, int offsetX, int offsetY, string message, string header = "Info") 
             : base(height, width, offsetX, offsetY, header)
         {
-            this.panelSet = panelSet;
             this.message = message;
         }
 

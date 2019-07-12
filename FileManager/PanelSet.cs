@@ -164,7 +164,7 @@ namespace FileManager
 
         private void RenderLegend(PanelSet panelSet)
         {
-            PopupSticker legend = new PopupSticker(1, Console.WindowWidth, 0, 47, panelSet, String.Empty,
+            PopupSticker legend = new PopupSticker(1, Console.WindowWidth, 0, 47, String.Empty,
                 " F1 Copy | F2 Rename | F3 Cut | F4 Paste | F5 Root | F6 Properties | F7 New Folder | F8 Drives | F9 Search ");
 
             legend.Render();
