@@ -21,7 +21,7 @@ namespace FileManager.ActionPerformers
             var source = sourceInfo.FullName;
             var destination = senderInfo.FullName + "\\" + sourceInfo.Name;
 
-            if (sourceInfo is FileInfo file)
+            if (sourceInfo is FileInfo)
             {
                 if (action == Actions.Copy)
                     File.Copy(source, destination);
@@ -30,7 +30,7 @@ namespace FileManager.ActionPerformers
                     File.Move(source, destination);
             }
 
-            else if (sourceInfo is DirectoryInfo directoryInfo)
+            else if (sourceInfo is DirectoryInfo)
             {
                 if (action == Actions.Copy)
                     Utility.DirectoryCopy(source, destination);
