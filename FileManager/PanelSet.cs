@@ -187,5 +187,11 @@ namespace FileManager
 
             legend.Render();
         }
+
+        public void Render()
+        {
+            foreach (ListView<FileSystemInfo> listView in Panels)
+                listView.Render();
+        }
     }
 }

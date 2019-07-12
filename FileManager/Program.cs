@@ -33,11 +33,8 @@ namespace FileManager
                     var popup = new PopupMessage(panelSet, $"This operation cannot be performed.\r\n{ex.Message}", "Error");
                     popup.Render();
                 }
-                
-                foreach (ListView<FileSystemInfo> listView in panelSet.Panels)
-                {
-                    listView.Render();
-                }
+
+                panelSet.Render();
             }
         }
     }
