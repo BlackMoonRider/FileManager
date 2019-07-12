@@ -63,7 +63,7 @@ namespace FileManager
                     lvi => new ListViewItem<FileSystemInfo>(
                     lvi,
                     lvi.Name,
-                    lvi is DirectoryInfo dir ? "<dir>" : lvi.Extension,
+                    lvi is DirectoryInfo ? "<dir>" : lvi.Extension,
                     lvi is FileInfo file ? file.Length.PrintAsNormalizedSize() : ""))
                     .ToList();
             }
@@ -119,9 +119,7 @@ namespace FileManager
                     }
                     break;
                 case ConsoleKey.Escape:
-                    if (Modal == null)
-                        goto default;
-                    else
+                    if (Modal != null)
                     {
                         Modal = null;
                         RefreshScreen();
