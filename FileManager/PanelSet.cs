@@ -64,7 +64,7 @@ namespace FileManager
                     lvi,
                     lvi.Name,
                     lvi is DirectoryInfo ? "<dir>" : lvi.Extension,
-                    lvi is FileInfo file ? file.Length.PrintAsNormalizedSize() : ""))
+                    lvi is FileInfo file ? Utility.BytesToStringAsNormalizedSize(file.Length) : ""))
                     .ToList();
             }
             catch (UnauthorizedAccessException)

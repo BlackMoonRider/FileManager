@@ -28,12 +28,12 @@ namespace FileManager.ActionPerformers
 
             if (sourceInfo is FileInfo fileInfo)
             {
-                stringBuilder.AppendLine("Size:               " + fileInfo.Length.PrintAsNormalizedSize());
+                stringBuilder.AppendLine("Size:               " + Utility.BytesToStringAsNormalizedSize(fileInfo.Length));
             }
 
             else if (sourceInfo is DirectoryInfo directoryInfo)
             {
-                stringBuilder.AppendLine("Size:               " + directoryInfo.DirectorySize().PrintAsNormalizedSize());
+                stringBuilder.AppendLine("Size:               " + Utility.BytesToStringAsNormalizedSize(directoryInfo.DirectorySize()));
                 stringBuilder.AppendLine("Files:              " + Directory.GetFiles(sourceInfo.FullName).Length);
                 stringBuilder.AppendLine("Folders:            " + Directory.GetDirectories(sourceInfo.FullName).Length);
             }

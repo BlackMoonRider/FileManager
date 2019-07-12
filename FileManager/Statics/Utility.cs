@@ -43,5 +43,32 @@ namespace FileManager
                 }
             }
         }
+
+        public static string BytesToStringAsNormalizedSize(long bytes) => BytesToStringAsNormalizedSize((ulong)bytes);
+
+        public static string BytesToStringAsNormalizedSize(ulong bytes)
+        {
+            if (bytes < 1024)
+                return $"{bytes} Byte";
+
+            ulong kbytes = bytes / 1024;
+
+            if (kbytes < 1024)
+                return $"{kbytes} KB";
+
+            ulong mbytes = kbytes / 1024;
+
+            if (mbytes < 1024)
+                return $"{mbytes} MB";
+
+            ulong gbytes = mbytes / 1024;
+
+            if (gbytes < 1024)
+                return $"{gbytes} GB";
+
+            ulong tbytes = gbytes / 1024;
+
+            return $"{tbytes} TB";
+        }
     }
 }

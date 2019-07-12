@@ -42,7 +42,7 @@ namespace FileManager.ActionPerformers
             FileInfo[] fileInfos = directoryInfo.GetFiles();
             filesAndFolders.AddRange(
                 fileInfos
-                .Select(f => new ListViewItem<FileSystemInfo>(f, f.Name, f.Extension, f.Length.PrintAsNormalizedSize()))
+                .Select(f => new ListViewItem<FileSystemInfo>(f, f.Name, f.Extension, Utility.BytesToStringAsNormalizedSize(f.Length)))
                 .ToList());
 
             DirectoryInfo[] directoryInfos = directoryInfo.GetDirectories();
