@@ -19,7 +19,7 @@ namespace FileManager
             : base(offsetX, offsetY, height, offsetXMultiplier, newForegroundColor, newBackgroundColorFocused, newBackgroundColorUnfocused)
         { }
 
-        override public void Clean()
+        public override void Clean()
         {
             scroll = 0;
             selectedIndex = previouslySelectedIndex = 0;
@@ -33,7 +33,7 @@ namespace FileManager
             }
         }
 
-        override public void Render()
+        public override void Render()
         {
             base.Render();
 

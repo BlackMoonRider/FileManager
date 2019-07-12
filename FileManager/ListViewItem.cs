@@ -11,7 +11,7 @@ namespace FileManager
     {
         public ListViewItem(T item, params string[] columns) : base (item, columns) { }
 
-        override public void Render(List<int> columnsWidth, int elementIndex, int listViewX, int listViewY)
+        public override void Render(List<int> columnsWidth, int elementIndex, int listViewX, int listViewY)
         {
             for (int i = 0; i < columns.Length; i++)
             {
