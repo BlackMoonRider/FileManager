@@ -10,8 +10,8 @@ namespace FileManager
 {
     class ActionPerformerArgs
     {
-        public ConsoleKeyInfo Key;
-        public object Sender;
+        public ConsoleKeyInfo Key { get; private set; }
+        public object Sender { get; private set; }
 
         public ActionPerformerArgs(ConsoleKeyInfo key, object sender)
         {
