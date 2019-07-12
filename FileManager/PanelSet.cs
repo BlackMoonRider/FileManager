@@ -11,7 +11,7 @@ namespace FileManager
 {
     class PanelSet
     {
-        public List<ListView<FileSystemInfo>> Panels { get; set; }
+        public List<ListView<FileSystemInfo>> Panels { get; private set; }
         public PopupList Modal { get; set; }
         public ListViewItem<FileSystemInfo> CurrentItemToOperateOn { get; set; }
         public ListView<FileSystemInfo> FocusedPanel
