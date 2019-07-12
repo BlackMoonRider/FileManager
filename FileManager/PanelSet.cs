@@ -51,8 +51,9 @@ namespace FileManager
                 if (i == 0)
                     Panels[i].Focused = true;
                 listView.Items = GetItems(Panels[i].Current);
-                ActionPerformer = new NoAction();
             }
+
+            ActionPerformer = new NoAction();
         }
 
         public ListView<FileSystemInfo> FocusedListView => GetFocusedListView();
