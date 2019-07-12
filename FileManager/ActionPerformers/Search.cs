@@ -25,7 +25,6 @@ namespace FileManager.ActionPerformers
             popupList.ListView.Current = panelSet.FocusedPanel.Current;
             panelSet.Modal = popupList;
 
-            var tmp = GetAllFilesAndFolders((DirectoryInfo)popupList.ListView.Current);
             popupList.ListView.Items = GetAllFilesAndFolders((DirectoryInfo)popupList.ListView.Current).Where(i => i.Item.Name.Contains(userInput)).ToList();
 
             if (popupList.ListView.Items.Count > 0)
