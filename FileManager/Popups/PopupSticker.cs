@@ -8,7 +8,6 @@ namespace FileManager
 {
     class PopupSticker : AbstractPopup
     {
-        private PanelSet panelSet;
         private string message;
 
         public PopupSticker(int height, int width, int offsetX, int offsetY, PanelSet panelSet, string message, string header = "Info") 
