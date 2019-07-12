@@ -14,24 +14,7 @@ namespace FileManager
         public List<ListView<FileSystemInfo>> Panels { get; private set; }
         public PopupList Modal { get; set; }
         public ListViewItem<FileSystemInfo> CurrentItemToOperateOn { get; set; }
-        public ListView<FileSystemInfo> FocusedPanel
-        {
-            get
-            {
-                ListView<FileSystemInfo> focusedPanel = null;
-
-                foreach (var panel in Panels)
-                {
-                    if (panel.Focused)
-                    {
-                        focusedPanel = panel;
-                        break;
-                    }
-                }
-
-                return focusedPanel;
-            }
-        }
+        public ListView<FileSystemInfo> FocusedPanel => Panels.First(p => p.Focused);
         public IActionPerformerBehavior ActionPerformer { get; private set; }
         public Actions CurrentAction { get; set; }
 
