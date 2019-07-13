@@ -22,12 +22,12 @@ namespace FileManager.ActionPerformers
 
             var destination = Path.GetDirectoryName(source) + "\\" + newName;
 
-            if (senderInfo is FileInfo file)
+            if (senderInfo is FileInfo)
             {
                 File.Move(source, destination);
             }
 
-            else if (senderInfo is DirectoryInfo directoryInfo)
+            else if (senderInfo is DirectoryInfo)
             {
                 Directory.Move(source, destination);
             }

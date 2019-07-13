@@ -11,27 +11,10 @@ namespace FileManager
 {
     class PanelSet
     {
-        public List<ListView<FileSystemInfo>> Panels { get; set; }
+        public List<ListView<FileSystemInfo>> Panels { get; private set; }
         public PopupList Modal { get; set; }
         public ListViewItem<FileSystemInfo> CurrentItemToOperateOn { get; set; }
-        public ListView<FileSystemInfo> FocusedPanel
-        {
-            get
-            {
-                ListView<FileSystemInfo> focusedPanel = null;
-
-                foreach (var panel in Panels)
-                {
-                    if (panel.Focused)
-                    {
-                        focusedPanel = panel;
-                        break;
-                    }
-                }
-
-                return focusedPanel;
-            }
-        }
+        public ListView<FileSystemInfo> FocusedPanel => Panels.First(p => p.Focused);
         public IActionPerformerBehavior ActionPerformer { get; private set; }
         public Actions CurrentAction { get; set; }
 
@@ -51,8 +34,9 @@ namespace FileManager
                 if (i == 0)
                     Panels[i].Focused = true;
                 listView.Items = GetItems(Panels[i].Current);
-                ActionPerformer = new NoAction();
             }
+
+            ActionPerformer = new NoAction();
         }
 
         public ListView<FileSystemInfo> FocusedListView => GetFocusedListView();
@@ -79,8 +63,8 @@ namespace FileManager
                     lvi => new ListViewItem<FileSystemInfo>(
                     lvi,
                     lvi.Name,
-                    lvi is DirectoryInfo dir ? "<dir>" : lvi.Extension,
-                    lvi is FileInfo file ? file.Length.PrintAsNormalizedSize() : ""))
+                    lvi is DirectoryInfo ? "<dir>" : lvi.Extension,
+                    lvi is FileInfo file ? Utility.BytesToStringAsNormalizedSize(file.Length) : ""))
                     .ToList();
             }
             catch (UnauthorizedAccessException)
@@ -135,9 +119,7 @@ namespace FileManager
                     }
                     break;
                 case ConsoleKey.Escape:
-                    if (Modal == null)
-                        goto default;
-                    else
+                    if (Modal != null)
                     {
                         Modal = null;
                         RefreshScreen();
@@ -182,10 +164,16 @@ namespace FileManager
 
         private void RenderLegend(PanelSet panelSet)
         {
-            PopupSticker legend = new PopupSticker(1, Console.WindowWidth, 0, 47, panelSet, String.Empty,
+            PopupSticker legend = new PopupSticker(1, Console.WindowWidth, 0, 47, String.Empty,
                 " F1 Copy | F2 Rename | F3 Cut | F4 Paste | F5 Root | F6 Properties | F7 New Folder | F8 Drives | F9 Search ");
 
             legend.Render();
+        }
+
+        public void Render()
+        {
+            foreach (ListView<FileSystemInfo> listView in Panels)
+                listView.Render();
         }
     }
 }

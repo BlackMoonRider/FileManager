@@ -25,33 +25,6 @@ namespace FileManager
             return size;
         }
 
-        public static string PrintAsNormalizedSize(this long bytes) => PrintAsNormalizedSize((ulong)bytes);
-
-        public static string PrintAsNormalizedSize(this ulong bytes)
-        {
-            if (bytes < 1024)
-                return $"{bytes} Byte";
-
-            ulong kbytes = bytes / 1024;
-
-            if (kbytes < 1024)
-                return $"{kbytes} KB";
-
-            ulong mbytes = kbytes / 1024;
-
-            if (mbytes < 1024)
-                return $"{mbytes} MB";
-
-            ulong gbytes = mbytes / 1024;
-
-            if (gbytes < 1024)
-                return $"{gbytes} GB";
-
-            ulong tbytes = gbytes / 1024;
-
-            return $"{kbytes} TB";
-        }
-
         public static string NormalizeStringLength(this string inputString, int maxLength)
         {
             string[] inputLines = inputString.Split(new string[] { "\r\n" }, StringSplitOptions.None);
@@ -76,8 +49,6 @@ namespace FileManager
 
                 }
             }
-
-            var tmp = stringBuilder.ToString();
 
             return stringBuilder.ToString();
         }
